@@ -2,7 +2,7 @@ class ListPetPlaces{
   static Future<List<Map<String,dynamic>>> getListPetPlaces() async {
     List<Map<String,dynamic>> _list = [
       {
-        "name": "Clinica 1",
+        "name": "Estimacão",
         "lat": -25.4762144,
         "lon": -49.3367242,
         "phone": "+554132886961",
@@ -74,7 +74,7 @@ class ListPetPlaces{
         ]
       },
       {
-        "name": "Clinica 2",
+        "name": "HVB",
         "lat": -25.444845,
         "lon": -49.290025,
         "phone": "+554130396644",
@@ -146,7 +146,7 @@ class ListPetPlaces{
         ]
       },
       {
-        "name": "PetShop 1",
+        "name": "Pets",
         "lat": -25.4762144,
         "lon": -49.3367242,
         "phone": "+554135287389",
@@ -178,21 +178,21 @@ class ListPetPlaces{
             "dayWeek": 3,
             "hour": {
               "open": "09:00",
-              "close": "18:00"
+              "close": "23:00"
             }
           },
           {
             "dayWeek": 4,
             "hour": {
               "open": "09:00",
-              "close": "18:00"
+              "close": "23:00"
             }
           },
           {
             "dayWeek": 5,
             "hour": {
               "open": "09:00",
-              "close": "18:00"
+              "close": "23:00"
             }
           },
           {

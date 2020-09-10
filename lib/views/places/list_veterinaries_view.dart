@@ -12,38 +12,41 @@ class ListVeterinariesView extends StatefulWidget {
 }
 
 class _ListVeterinariesViewState extends State<ListVeterinariesView> {
-
   bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Veterinários próximos", style: TextStyle(color: Colors.white),),
+        title: Text(
+          "Veterinários próximos",
+          style: TextStyle(color: Colors.white),
+        ),
         centerTitle: true,
       ),
       backgroundColor: Colors.white,
       body: isLoading
           ? Center(
-        child: CircularProgressIndicator(),
-      )
+              child: CircularProgressIndicator(),
+            )
           : widget.petPlacesModel.listVeterinary == null
-          ? Container()
-          :ListView.builder(
-        itemCount: widget.petPlacesModel.listVeterinary.length,
-        itemBuilder: (context, index){
-          return _petCard( context,  index);
-        },
-      ),
+              ? Container()
+              : ListView.builder(
+                  itemCount: widget.petPlacesModel.listVeterinary.length,
+                  itemBuilder: (context, index) {
+                    return _petCard(context, index);
+                  },
+                ),
     );
   }
-  Widget _petCard(BuildContext context, int index){
+
+  Widget _petCard(BuildContext context, int index) {
     return GestureDetector(
       child: Padding(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(5),
         child: Card(
           child: Container(
-            height: 130,
+            height: 160,
             width: MediaQuery.of(context).size.width * 0.95,
             child: Row(
               children: [
@@ -56,12 +59,23 @@ class _ListVeterinariesViewState extends State<ListVeterinariesView> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     shape: BoxShape.circle,
-                    image: DecorationImage(
-                        image: widget.petPlacesModel.listVeterinary[index].urlImageAvatar.isNotEmpty
-                       ? NetworkImage("${widget.petPlacesModel.listVeterinary[index].urlImageAvatar}")
-                            : AssetImage("assets/images/veterinario.png"),
-                        fit: BoxFit.fill),
                   ),
+                  child: widget.petPlacesModel.listVeterinary[index]
+                          .urlImageAvatar.isNotEmpty
+                      ? Image.network(
+                          "${widget.petPlacesModel.listPetShops[index].urlImageAvatar}",
+                          color:
+                              widget.petPlacesModel.listPetShops[index].isOpen
+                                  ? null
+                                  : Colors.grey,
+                          fit: BoxFit.contain,
+                        )
+                      : Image.asset("assets/images/veterinario.png",
+                          color:
+                              widget.petPlacesModel.listPetShops[index].isOpen
+                                  ? Colors.transparent
+                                  : Colors.grey,
+                          fit: BoxFit.contain),
                 ),
                 Expanded(
                   child: Padding(
@@ -74,35 +88,63 @@ class _ListVeterinariesViewState extends State<ListVeterinariesView> {
                             "${widget.petPlacesModel.listVeterinary[index].name}",
                             style: TextStyle(
                                 fontSize: 16,
-                                color: Color_Scheme.primaryColor,
-                                fontWeight: FontWeight.w600
-                            ),
+                                color: widget.petPlacesModel.listPetShops[index]
+                                        .isOpen
+                                    ? Color_Scheme.primaryColor
+                                    : Colors.grey,
+                                fontWeight: FontWeight.w600),
                           ),
                         ),
-
                         Padding(
                           padding: EdgeInsets.all(3),
                           child: Text(
                             "${widget.petPlacesModel.listVeterinary[index].address}",
                             style: TextStyle(
                                 fontSize: 14,
-                                color: Color_Scheme.primaryColor,
-                                fontWeight: FontWeight.w400
-                            ),
+                                color: widget.petPlacesModel.listPetShops[index]
+                                        .isOpen
+                                    ? Color_Scheme.primaryColor
+                                    : Colors.grey,
+                                fontWeight: FontWeight.w400),
                           ),
                         ),
-
                         Padding(
                           padding: EdgeInsets.all(3),
                           child: Text(
                             "${widget.petPlacesModel.listVeterinary[index].distance} km",
                             style: TextStyle(
                                 fontSize: 14,
-                                color: Color_Scheme.primaryColor,
-                                fontWeight: FontWeight.w400
-                            ),
+                                color: widget.petPlacesModel.listPetShops[index]
+                                        .isOpen
+                                    ? Color_Scheme.primaryColor
+                                    : Colors.grey,
+                                fontWeight: FontWeight.w400),
                           ),
                         ),
+                        Padding(
+                            padding: EdgeInsets.all(5),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                  child: Text(
+                                    "${widget.petPlacesModel.listVeterinary[index].rating}",
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: widget.petPlacesModel
+                                                .listVeterinary[index].isOpen
+                                            ? Color_Scheme.primaryColor
+                                            : Colors.grey,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                )
+                              ],
+                            )),
                       ],
                     ),
                   ),
@@ -112,10 +154,9 @@ class _ListVeterinariesViewState extends State<ListVeterinariesView> {
           ),
         ),
       ),
-      onTap: (){
+      onTap: () {
         // Navigator.push(context, MaterialPageRoute(builder: (context) => PetGeneralView(widget.petPlacesModel.listPetShops[index])));
       },
     );
   }
 }
-

@@ -61,8 +61,8 @@ class PetShopModel {
     }
     specialities = json['specialities'].cast<String>();
 
-    DateTime _now = DateTime.now().toUtc();
-    int _dayWeekNow = DateTime.now().toUtc().weekday;
+    DateTime _now = DateTime.now().toLocal();
+    int _dayWeekNow = DateTime.now().toLocal().weekday;
     operationList.forEach((element) {
       if (element.dayWeek == _dayWeekNow) {
         DateTime dateTimeOpen = DateTime(
@@ -77,7 +77,7 @@ class PetShopModel {
             _now.day,
             int.parse(element.hour.close.substring(0, 2)),
             int.parse(element.hour.close.substring(3, 5)));
-        isOpen = (dateTimeOpen.isBefore(_now) && dateTimeClose.isAfter(_now));
+        isOpen = (dateTimeOpen.isBefore(_now) && !dateTimeClose.isAfter(_now));
       }
     });
 

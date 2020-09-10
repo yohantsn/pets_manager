@@ -43,8 +43,8 @@ class PetGeneralView extends StatelessWidget {
                         elevation: 5,
                         margin: EdgeInsets.all(10),
                         child: Container(
-                          height: 160,
-                          width: 160,
+                          height: MediaQuery.of(context).size.width * 0.35,
+                          width: MediaQuery.of(context).size.width * 0.35,
                           decoration: BoxDecoration(
                               color: Color_Scheme.colorRed,
                               borderRadius: BorderRadius.circular(5)),
@@ -55,8 +55,8 @@ class PetGeneralView extends StatelessWidget {
                               Image.asset(
                                 "assets/images/alarme.png",
                                 height:
-                                    50,
-                                width: 50,
+                                MediaQuery.of(context).size.width * 0.13,
+                                width: MediaQuery.of(context).size.width * 0.13,
                               ),
                               Padding(
                                 padding: EdgeInsets.all(10),
@@ -78,8 +78,8 @@ class PetGeneralView extends StatelessWidget {
                         elevation: 5,
                         margin: EdgeInsets.all(10),
                         child: Container(
-                          height: 160,
-                          width: 160,
+                          height: MediaQuery.of(context).size.width * 0.35,
+                          width: MediaQuery.of(context).size.width * 0.35,
                           decoration: BoxDecoration(
                               color: Color_Scheme.secondaryLigthColor,
                               borderRadius: BorderRadius.circular(5)),
@@ -90,8 +90,8 @@ class PetGeneralView extends StatelessWidget {
                               Image.asset(
                                 "assets/images/vacina.png",
                                 height:
-                                    50,
-                                width: 50,
+                                MediaQuery.of(context).size.width * 0.13,
+                                width: MediaQuery.of(context).size.width * 0.13,
                               ),
                               Padding(
                                 padding: EdgeInsets.all(10),
@@ -123,8 +123,8 @@ class PetGeneralView extends StatelessWidget {
                         elevation: 5,
                         margin: EdgeInsets.all(10),
                         child: Container(
-                          height: 160,
-                          width: 160,
+                          height: MediaQuery.of(context).size.width * 0.35,
+                          width: MediaQuery.of(context).size.width * 0.35,
                           decoration: BoxDecoration(
                               color: Color_Scheme.secondaryLigthColor,
                               borderRadius: BorderRadius.circular(5)),
@@ -135,8 +135,8 @@ class PetGeneralView extends StatelessWidget {
                               Image.asset(
                                 "assets/images/veterinario.png",
                                 height:
-                                    50,
-                                width: 50,
+                                MediaQuery.of(context).size.width * 0.13,
+                                width: MediaQuery.of(context).size.width * 0.13,
                               ),
                               Padding(
                                 padding: EdgeInsets.all(10),
@@ -162,8 +162,8 @@ class PetGeneralView extends StatelessWidget {
                         elevation: 5,
                         margin: EdgeInsets.all(10),
                         child: Container(
-                          height: 160,
-                          width: 160,
+                          height: MediaQuery.of(context).size.width * 0.35,
+                          width: MediaQuery.of(context).size.width * 0.35,
                           decoration: BoxDecoration(
                               color: Color_Scheme.secondaryLigthColor,
                               borderRadius: BorderRadius.circular(5)),
@@ -174,8 +174,8 @@ class PetGeneralView extends StatelessWidget {
                               Image.asset(
                                 "assets/images/banho_pet.png",
                                 height:
-                                    50,
-                                width: 50,
+                                MediaQuery.of(context).size.width * 0.13,
+                                width: MediaQuery.of(context).size.width * 0.13,
                               ),
                               Padding(
                                 padding: EdgeInsets.all(10),
