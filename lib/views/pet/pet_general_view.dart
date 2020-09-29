@@ -3,6 +3,7 @@ import 'package:pets_manager/controllers/petplaces_controller.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
 import 'package:pets_manager/models/pet_places_model.dart';
 import 'package:pets_manager/models/pets_model.dart';
+import 'package:pets_manager/views/pet/my_pet_forge_view.dart';
 import 'package:pets_manager/views/places/list_petshops_view.dart';
 import 'package:pets_manager/views/places/list_veterinaries_view.dart';
 
@@ -71,7 +72,9 @@ class PetGeneralView extends StatelessWidget {
                             ],
                           ),
                         )),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => MyPetForgetView(this._petsModel)));
+                    },
                   ),
                   GestureDetector(
                     child: Card(

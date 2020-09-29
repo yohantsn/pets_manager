@@ -1,4 +1,8 @@
 
+import 'dart:ffi';
+
+import 'package:geocoder/geocoder.dart';
+import 'package:latlong/latlong.dart';
 import 'package:location/location.dart';
 
 class LocationManager{
@@ -28,5 +32,12 @@ class LocationManager{
 
     _locationData = await location.getLocation();
     return _locationData;
+  }
+
+  Future<String> getAddress(double lat, double lon) async {
+    await  Geocoder.local.findAddressesFromCoordinates(Coordinates(lat, lon)).then((value){
+        print(value.first.addressLine);
+        return value.first.addressLine.toString();
+    });
   }
 }
