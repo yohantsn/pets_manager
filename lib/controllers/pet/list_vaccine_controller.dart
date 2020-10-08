@@ -31,6 +31,7 @@ abstract class ListVaccineControllerStore with Store {
     isLoading = true;
     _vaccineRepositorie.getListVaccine(idPet: this.petsModel.idPet).then((value){
       this.listVaccineModel = value;
+      print(value);
       isLoading = false;
     });
   }

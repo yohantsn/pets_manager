@@ -13,25 +13,29 @@ class PetVaccinesView extends StatefulWidget {
 class _PetVaccinesViewState extends State<PetVaccinesView> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Notificações"),
-        bottom: TabBar(
-          tabs: [
-            Tab(text: 'Capa'),
-            Tab(text: 'Vacinas',),
-          ],
-
-        ),
-      ),
-      body: SafeArea(
-          child: TabBarView(
+    return DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text("Notificações"),
+            bottom: TabBar(
+              tabs: [
+                Tab(text: 'Capa'),
+                Tab(
+                  text: 'Vacinas',
+                ),
+              ],
+            ),
+          ),
+          body: SafeArea(
+              child: TabBarView(
             children: [
               CaseVaccineTabView(),
-              ListVaccineTabView(petsModel: widget.petsModel,),
+              ListVaccineTabView(
+                petsModel: widget.petsModel,
+              ),
             ],
-          )
-      ),
-    );
+          )),
+        ));
   }
 }
