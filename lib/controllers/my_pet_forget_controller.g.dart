@@ -103,15 +103,6 @@ mixin _$MyPetForgetController on MyPetForgetControllerStore, Store {
     });
   }
 
-  final _$savePetForgetAsyncAction =
-      AsyncAction('MyPetForgetControllerStore.savePetForget');
-
-  @override
-  Future savePetForget(PetsModel petsModel, String message) {
-    return _$savePetForgetAsyncAction
-        .run(() => super.savePetForget(petsModel, message));
-  }
-
   final _$MyPetForgetControllerStoreActionController =
       ActionController(name: 'MyPetForgetControllerStore');
 
@@ -132,6 +123,17 @@ mixin _$MyPetForgetController on MyPetForgetControllerStore, Store {
         .startAction(name: 'MyPetForgetControllerStore.getAddressClick');
     try {
       return super.getAddressClick(latLng);
+    } finally {
+      _$MyPetForgetControllerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void savePetForget(PetsModel petsModel, String message) {
+    final _$actionInfo = _$MyPetForgetControllerStoreActionController
+        .startAction(name: 'MyPetForgetControllerStore.savePetForget');
+    try {
+      return super.savePetForget(petsModel, message);
     } finally {
       _$MyPetForgetControllerStoreActionController.endAction(_$actionInfo);
     }

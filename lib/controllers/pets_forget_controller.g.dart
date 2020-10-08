@@ -53,7 +53,7 @@ mixin _$PetsForgetController on PetsForgetControllerStore, Store {
       AsyncAction('PetsForgetControllerStore.getPetForgetById');
 
   @override
-  Future getPetForgetById(String id, String uid) {
+  Future<void> getPetForgetById(String id, String uid) {
     return _$getPetForgetByIdAsyncAction
         .run(() => super.getPetForgetById(id, uid));
   }

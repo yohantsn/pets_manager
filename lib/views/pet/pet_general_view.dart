@@ -33,19 +33,18 @@ class PetGeneralView extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+              padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   GestureDetector(
                     child: Card(
                         elevation: 5,
-                        margin: EdgeInsets.all(10),
+                        margin: EdgeInsets.only(right: 10),
                         child: Container(
-                          height: MediaQuery.of(context).size.width * 0.35,
-                          width: MediaQuery.of(context).size.width * 0.35,
+                          height: MediaQuery.of(context).size.width * 0.40,
+                          width: MediaQuery.of(context).size.width * 0.40,
                           decoration: BoxDecoration(
                               color: Color_Scheme.colorRed,
                               borderRadius: BorderRadius.circular(5)),
@@ -56,8 +55,8 @@ class PetGeneralView extends StatelessWidget {
                               Image.asset(
                                 "assets/images/alarme.png",
                                 height:
-                                MediaQuery.of(context).size.width * 0.13,
-                                width: MediaQuery.of(context).size.width * 0.13,
+                                    MediaQuery.of(context).size.width * 0.15,
+                                width: MediaQuery.of(context).size.width * 0.15,
                               ),
                               Padding(
                                 padding: EdgeInsets.all(10),
@@ -73,16 +72,20 @@ class PetGeneralView extends StatelessWidget {
                           ),
                         )),
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => MyPetForgetView(this._petsModel)));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  MyPetForgetView(this._petsModel)));
                     },
                   ),
                   GestureDetector(
                     child: Card(
                         elevation: 5,
-                        margin: EdgeInsets.all(10),
+                        margin: EdgeInsets.only(left: 10),
                         child: Container(
-                          height: MediaQuery.of(context).size.width * 0.35,
-                          width: MediaQuery.of(context).size.width * 0.35,
+                          height: MediaQuery.of(context).size.width * 0.40,
+                          width: MediaQuery.of(context).size.width * 0.40,
                           decoration: BoxDecoration(
                               color: Color_Scheme.secondaryLigthColor,
                               borderRadius: BorderRadius.circular(5)),
@@ -93,8 +96,8 @@ class PetGeneralView extends StatelessWidget {
                               Image.asset(
                                 "assets/images/vacina.png",
                                 height:
-                                MediaQuery.of(context).size.width * 0.13,
-                                width: MediaQuery.of(context).size.width * 0.13,
+                                    MediaQuery.of(context).size.width * 0.15,
+                                width: MediaQuery.of(context).size.width * 0.15,
                               ),
                               Padding(
                                 padding: EdgeInsets.all(10),
@@ -115,19 +118,18 @@ class PetGeneralView extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+              padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   GestureDetector(
                     child: Card(
                         elevation: 5,
-                        margin: EdgeInsets.all(10),
+                        margin: EdgeInsets.only(right: 10),
                         child: Container(
-                          height: MediaQuery.of(context).size.width * 0.35,
-                          width: MediaQuery.of(context).size.width * 0.35,
+                          height: MediaQuery.of(context).size.width * 0.40,
+                          width: MediaQuery.of(context).size.width * 0.40,
                           decoration: BoxDecoration(
                               color: Color_Scheme.secondaryLigthColor,
                               borderRadius: BorderRadius.circular(5)),
@@ -138,8 +140,8 @@ class PetGeneralView extends StatelessWidget {
                               Image.asset(
                                 "assets/images/veterinario.png",
                                 height:
-                                MediaQuery.of(context).size.width * 0.13,
-                                width: MediaQuery.of(context).size.width * 0.13,
+                                    MediaQuery.of(context).size.width * 0.15,
+                                width: MediaQuery.of(context).size.width * 0.15,
                               ),
                               Padding(
                                 padding: EdgeInsets.all(10),
@@ -154,213 +156,239 @@ class PetGeneralView extends StatelessWidget {
                             ],
                           ),
                         )),
-                    onTap: ()  {
-                      _getPetPlace().then((value){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ListVeterinariesView(petPlacesModel: value,)));
-                      });
-                    },
-                  ),
-                  GestureDetector(
-                    child: Card(
-                        elevation: 5,
-                        margin: EdgeInsets.all(10),
-                        child: Container(
-                          height: MediaQuery.of(context).size.width * 0.35,
-                          width: MediaQuery.of(context).size.width * 0.35,
-                          decoration: BoxDecoration(
-                              color: Color_Scheme.secondaryLigthColor,
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                "assets/images/banho_pet.png",
-                                height:
-                                MediaQuery.of(context).size.width * 0.13,
-                                width: MediaQuery.of(context).size.width * 0.13,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(10),
-                                child: Text(
-                                  "Banho e Tosa",
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: Color_Scheme.primaryColor),
-                                  textAlign: TextAlign.center,
-                                ),
-                              )
-                            ],
-                          ),
-                        )),
                     onTap: () {
-                      _getPetPlace().then((value){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ListPetShopsView(petPlacesModel: value,)));
+                      _getPetPlace().then((value) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ListVeterinariesView(
+                                      petPlacesModel: value,
+                                    )));
                       });
                     },
                   ),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: GestureDetector(
+                      child: Card(
+                          elevation: 5,
+                          margin: EdgeInsets.only(left: 10),
+                          child: Container(
+                            height: MediaQuery.of(context).size.width * 0.40,
+                            width: MediaQuery.of(context).size.width * 0.40,
+                            decoration: BoxDecoration(
+                                color: Color_Scheme.secondaryLigthColor,
+                                borderRadius: BorderRadius.circular(5)),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  "assets/images/banho_pet.png",
+                                  height:
+                                      MediaQuery.of(context).size.width * 0.15,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.15,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(10),
+                                  child: Text(
+                                    "Banho e Tosa",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Color_Scheme.primaryColor),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                )
+                              ],
+                            ),
+                          )),
+                      onTap: () {
+                        _getPetPlace().then((value) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ListPetShopsView(
+                                        petPlacesModel: value,
+                                      )));
+                        });
+                      },
+                    ),
+                  )
                 ],
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(30, 5, 30, 0),
+              padding: EdgeInsets.fromLTRB(
+                  MediaQuery.of(context).size.width * 0.05,
+                  40,
+                  MediaQuery.of(context).size.width * 0.05,
+                  0),
               child: GestureDetector(
-                child: Card(
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(
+                  child: Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
                     side: BorderSide(color: Color_Scheme.secondaryColor),
-                    borderRadius: BorderRadius.circular(10)
-                  ),
-                  child: Container(
-                    margin: EdgeInsets.fromLTRB(5, 2, 5, 2),
-                    height: 40,
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Image.asset(
-                            "assets/images/pata.png",
-                            height: 35,
-                            width: 35,
-                            alignment: Alignment.centerLeft,
-                          ),
+                    borderRadius: BorderRadius.circular(10)),
+                color: Color_Scheme.secondaryLigthColor,
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(5, 2, 5, 2),
+                  height: 40,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Image.asset(
+                          "assets/images/pata.png",
+                          height: 35,
+                          width: 35,
+                          alignment: Alignment.centerLeft,
                         ),
-                        Expanded(
-                          child: Text(
-                            "Alterar dados ${this._petsModel.sex == "M" ? "do" : "da"} ${this._petsModel.namePet}",
-                            style: TextStyle(
-                                fontSize: 18, color: Color_Scheme.primaryColor),
-                          ),
-                        )
-                      ],
-                    ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          "Alterar dados ${this._petsModel.sex == "M" ? "do" : "da"} ${this._petsModel.namePet}",
+                          style: TextStyle(
+                              fontSize: 18, color: Color_Scheme.primaryColor),
+                        ),
+                      )
+                    ],
                   ),
-                )
-              ),
+                ),
+              )),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(30, 5, 30, 0),
+              padding: EdgeInsets.fromLTRB(
+                  MediaQuery.of(context).size.width * 0.05,
+                  5,
+                  MediaQuery.of(context).size.width * 0.05,
+                  0),
               child: GestureDetector(
                   child: Card(
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Color_Scheme.secondaryColor),
-                        borderRadius: BorderRadius.circular(10)
-                    ),
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(5, 2, 5, 2),
-                      height: 40,
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.all(5),
-                            child: Image.asset(
-                              "assets/images/droga.png",
-                              height: 35,
-                              width: 35,
-                              alignment: Alignment.centerLeft,
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              "Lembrete de Medicamentos",
-                              style: TextStyle(
-                                  fontSize: 18, color: Color_Scheme.primaryColor),
-                            ),
-                          )
-                        ],
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                    side: BorderSide(color: Color_Scheme.secondaryColor),
+                    borderRadius: BorderRadius.circular(10)),
+                color: Color_Scheme.secondaryLigthColor,
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(5, 2, 5, 2),
+                  height: 40,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Image.asset(
+                          "assets/images/droga.png",
+                          height: 35,
+                          width: 35,
+                          alignment: Alignment.centerLeft,
+                        ),
                       ),
-                    ),
-                  )
-              ),
+                      Expanded(
+                        child: Text(
+                          "Lembrete de Medicamentos",
+                          style: TextStyle(
+                              fontSize: 18, color: Color_Scheme.primaryColor),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              )),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(30, 5, 30, 0),
+              padding: EdgeInsets.fromLTRB(
+                  MediaQuery.of(context).size.width * 0.05,
+                  5,
+                  MediaQuery.of(context).size.width * 0.05,
+                  0),
               child: GestureDetector(
                   child: Card(
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Color_Scheme.secondaryColor),
-                        borderRadius: BorderRadius.circular(10)
-                    ),
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(5, 2, 5, 2),
-                      height: 40,
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.all(5),
-                            child: Image.asset(
-                              "assets/images/bisturi.png",
-                              height: 35,
-                              width: 35,
-                              alignment: Alignment.centerLeft,
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              "Registrar Cirurgia",
-                              style: TextStyle(
-                                  fontSize: 18, color: Color_Scheme.primaryColor),
-                            ),
-                          )
-                        ],
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                    side: BorderSide(color: Color_Scheme.secondaryColor),
+                    borderRadius: BorderRadius.circular(10)),
+                color: Color_Scheme.secondaryLigthColor,
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(5, 2, 5, 2),
+                  height: 40,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Image.asset(
+                          "assets/images/bisturi.png",
+                          height: 35,
+                          width: 35,
+                          alignment: Alignment.centerLeft,
+                        ),
                       ),
-                    ),
-                  )
-              ),
+                      Expanded(
+                        child: Text(
+                          "Registrar Cirurgia",
+                          style: TextStyle(
+                              fontSize: 18, color: Color_Scheme.primaryColor),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              )),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(30, 5, 30, 5),
+              padding: EdgeInsets.fromLTRB(
+                  MediaQuery.of(context).size.width * 0.05,
+                  5,
+                  MediaQuery.of(context).size.width * 0.05,
+                  5),
               child: GestureDetector(
                   child: Card(
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Color_Scheme.secondaryColor),
-                        borderRadius: BorderRadius.circular(10)
-                    ),
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(5, 2, 5, 2),
-                      height: 40,
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.all(5),
-                            child: Image.asset(
-                              "assets/images/virus.png",
-                              height: 35,
-                              width: 35,
-                              alignment: Alignment.centerLeft,
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              "Registrar estado de saúde",
-                              style: TextStyle(
-                                  fontSize: 18, color: Color_Scheme.primaryColor),
-                            ),
-                          )
-                        ],
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                    side: BorderSide(color: Color_Scheme.secondaryColor),
+                    borderRadius: BorderRadius.circular(10)),
+                color: Color_Scheme.secondaryLigthColor,
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(5, 2, 5, 2),
+                  height: 40,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Image.asset(
+                          "assets/images/virus.png",
+                          height: 35,
+                          width: 35,
+                          alignment: Alignment.centerLeft,
+                        ),
                       ),
-                    ),
-                  )
-              ),
+                      Expanded(
+                        child: Text(
+                          "Registrar estado de saúde",
+                          style: TextStyle(
+                              fontSize: 18, color: Color_Scheme.primaryColor),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              )),
             ),
           ],
         ),
@@ -368,7 +396,7 @@ class PetGeneralView extends StatelessWidget {
     );
   }
 
-  Future<PetPlacesModel> _getPetPlace() async{
-   return await PetPlacesController().getPetPlaces();
+  Future<PetPlacesModel> _getPetPlace() async {
+    return await PetPlacesController().getPetPlaces();
   }
 }

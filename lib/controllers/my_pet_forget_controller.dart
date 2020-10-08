@@ -55,16 +55,17 @@ abstract class MyPetForgetControllerStore with Store {
   }
 
   @action
-  Future<void> savePetForget(PetsModel petsModel, String message) async {
+  void savePetForget(PetsModel petsModel, String message) {
     this.isLoading = true;
     PetForgetModel petForgetModel = PetForgetModel(
         petsModel: petsModel,
         lat: this.latLngClick.latitude,
         lon: this.latLngClick.longitude,
         mensagem: message);
-    await Future.delayed(Duration(seconds: 3));
-    this.isLoading = false;
-    this.isSucess = true;
-    //add to Firebase
+    Future.delayed(Duration(seconds: 3)).then((value){
+      this.isLoading = false;
+      this.isSucess = true;
+    });
+    //TODO - add to Firebase
   }
 }

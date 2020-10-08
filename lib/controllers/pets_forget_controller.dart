@@ -25,7 +25,7 @@ abstract class PetsForgetControllerStore with Store{
   }
 
   @action
-  void getPetForgetById(String id, String uid) async{
+  Future<void> getPetForgetById(String id, String uid) async{
     Map<String,dynamic> _map = await ListPetsForget.getPetForgetByIdRepositorie(id, uid);
     if(_map.isNotEmpty && _map != null){
       this.petForgetModel = PetForgetModel.fromJson(_map);
