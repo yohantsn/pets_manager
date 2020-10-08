@@ -1,4 +1,4 @@
-class ListPetsForget{
+class PetsForgetRepositorie{
   static Future<List<Map<String,dynamic>>> getListPetsForgetRepositorie() async{
     List<Map<String,dynamic>> _list = [
       {

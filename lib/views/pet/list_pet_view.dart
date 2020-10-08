@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pets_manager/controllers/pet_contoller.dart';
+import 'package:pets_manager/controllers/pet/pet_contoller.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
 import 'package:pets_manager/models/pets_model.dart';
 import 'package:pets_manager/views/pet/cadastro_pet_view.dart';

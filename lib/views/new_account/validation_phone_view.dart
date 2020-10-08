@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:pets_manager/controllers/validation_phone_controller.dart';
+import 'package:pets_manager/controllers/new_account/validation_phone_controller.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
 import 'package:pets_manager/views/pet/cadastro_pet_view.dart';
 

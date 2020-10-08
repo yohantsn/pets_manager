@@ -1,6 +1,6 @@
 import 'package:mobx/mobx.dart';
 import 'package:pets_manager/models/pet_forget_model.dart';
-import 'package:pets_manager/repositories/list_pets_forget.dart';
+import 'package:pets_manager/repositories/pets_forget_repositorie.dart';
 part 'pets_forget_controller.g.dart';
 
 class PetsForgetController = PetsForgetControllerStore with _$PetsForgetController;
@@ -15,7 +15,7 @@ abstract class PetsForgetControllerStore with Store{
 
   @action
   void getListPetsForget() async{
-    List<Map<String,dynamic>> _list = await ListPetsForget.getListPetsForgetRepositorie();
+    List<Map<String,dynamic>> _list = await PetsForgetRepositorie.getListPetsForgetRepositorie();
     List<PetForgetModel> _listPetsForget = List<PetForgetModel>();
     _list.forEach((element) {
       PetForgetModel _petForgetModel = PetForgetModel.fromJson(element);
@@ -25,10 +25,13 @@ abstract class PetsForgetControllerStore with Store{
   }
 
   @action
-  Future<void> getPetForgetById(String id, String uid) async{
-    Map<String,dynamic> _map = await ListPetsForget.getPetForgetByIdRepositorie(id, uid);
-    if(_map.isNotEmpty && _map != null){
-      this.petForgetModel = PetForgetModel.fromJson(_map);
-    }
+  void getPetForgetById(String id, String uid) {
+    Map<String,dynamic> _map ;
+    PetsForgetRepositorie.getPetForgetByIdRepositorie(id, uid).then((value){
+      _map = value;
+      if(_map.isNotEmpty && _map != null){
+        this.petForgetModel = PetForgetModel.fromJson(_map);
+      }
+    });
   }
 }

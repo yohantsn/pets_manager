@@ -1,4 +1,4 @@
-class ListPetPlaces{
+class ListPetRepositorie{
   static Future<List<Map<String,dynamic>>> getListPetPlaces() async {
     List<Map<String,dynamic>> _list = [
       {

@@ -49,13 +49,18 @@ mixin _$PetsForgetController on PetsForgetControllerStore, Store {
     return _$getListPetsForgetAsyncAction.run(() => super.getListPetsForget());
   }
 
-  final _$getPetForgetByIdAsyncAction =
-      AsyncAction('PetsForgetControllerStore.getPetForgetById');
+  final _$PetsForgetControllerStoreActionController =
+      ActionController(name: 'PetsForgetControllerStore');
 
   @override
-  Future<void> getPetForgetById(String id, String uid) {
-    return _$getPetForgetByIdAsyncAction
-        .run(() => super.getPetForgetById(id, uid));
+  void getPetForgetById(String id, String uid) {
+    final _$actionInfo = _$PetsForgetControllerStoreActionController
+        .startAction(name: 'PetsForgetControllerStore.getPetForgetById');
+    try {
+      return super.getPetForgetById(id, uid);
+    } finally {
+      _$PetsForgetControllerStoreActionController.endAction(_$actionInfo);
+    }
   }
 
   @override

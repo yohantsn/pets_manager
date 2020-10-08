@@ -5,7 +5,7 @@ import 'package:mobx/mobx.dart';
 import 'package:pets_manager/core/location_manager.dart';
 import 'package:pets_manager/models/pet_forget_model.dart';
 import 'package:pets_manager/models/pets_model.dart';
-import 'package:pets_manager/repositories/list_pets_forget.dart';
+import 'package:pets_manager/repositories/pets_forget_repositorie.dart';
 part 'my_pet_forget_controller.g.dart';
 
 class MyPetForgetController = MyPetForgetControllerStore

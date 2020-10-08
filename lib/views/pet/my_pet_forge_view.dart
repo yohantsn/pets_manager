@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
-import 'package:pets_manager/controllers/my_pet_forget_controller.dart';
+import 'package:pets_manager/controllers/pet/my_pet_forget_controller.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
 import 'package:pets_manager/core/commons_value.dart';
 import 'package:pets_manager/models/pets_model.dart';
