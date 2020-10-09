@@ -116,7 +116,7 @@ class _PetListViewState extends State<PetListView> {
                         Padding(
                           padding: EdgeInsets.all(3),
                           child: Text(
-                            "${_list[index].agePet} / ${_list[index].colorPet}",
+                            "${_list[index].dateNascPet} / ${_list[index].colorPet}",
                             style: TextStyle(
                                 fontSize: 14,
                                 color: Color_Scheme.primaryColor,

@@ -4,7 +4,7 @@ class PetsModel {
   String speciePet;
   String breedPet;
   String colorPet;
-  String agePet;
+  String dateNascPet;
   String photoPet;
   String sex; //M - Macho F - Femea
   String microchip;
@@ -15,7 +15,7 @@ class PetsModel {
         this.speciePet,
         this.breedPet,
         this.colorPet,
-        this.agePet,
+        this.dateNascPet,
         this.photoPet,
         this.sex,
         this.microchip});
@@ -26,7 +26,7 @@ class PetsModel {
     speciePet = json['speciePet'];
     breedPet = json['breedPet'];
     colorPet = json['colorPet'];
-    agePet = json['agePet'];
+    dateNascPet = json['dateNascPet'];
     photoPet = json['photoPet'];
     sex = json['sex'];
     microchip = json['microchip'];
@@ -39,7 +39,7 @@ class PetsModel {
     data['speciePet'] = this.speciePet;
     data['breedPet'] = this.breedPet;
     data['colorPet'] = this.colorPet;
-    data['agePet'] = this.agePet;
+    data['dateNascPet'] = this.dateNascPet;
     data['photoPet'] = this.photoPet;
     data['sex'] = this.sex;
     data['microchip'] = this.microchip;

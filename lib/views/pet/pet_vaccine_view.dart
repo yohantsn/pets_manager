@@ -44,6 +44,7 @@ class _PetVaccinesViewState extends State<PetVaccinesView> {
               child: TabBarView(
             children: [
               CaseVaccineTabView(
+                petsModel: widget.petsModel,
                 color_scheme: widget.color_scheme,
               ),
               ListVaccineTabView(
