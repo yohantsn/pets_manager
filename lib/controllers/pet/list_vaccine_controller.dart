@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
-import 'package:pets_manager/models/pets_model.dart';
-import 'package:pets_manager/models/vaccine_model.dart';
-import 'package:pets_manager/repositories/vaccine_repositorie.dart';
+import 'package:pets_manager/models/pets/pets_model.dart';
+import 'package:pets_manager/models/pets/vaccine_model.dart';
+import 'package:pets_manager/repositories/pets/vaccine_repositorie.dart';
 
 part 'list_vaccine_controller.g.dart';
 
@@ -13,6 +13,7 @@ abstract class ListVaccineControllerStore with Store {
 
   ListVaccineControllerStore({@required PetsModel pets}){
     this.petsModel = pets;
+    getListVaccine();
   }
 
   VaccineRepositorie _vaccineRepositorie = VaccineRepositorie();
@@ -31,7 +32,6 @@ abstract class ListVaccineControllerStore with Store {
     isLoading = true;
     _vaccineRepositorie.getListVaccine(idPet: this.petsModel.idPet).then((value){
       this.listVaccineModel = value;
-      print(value);
       isLoading = false;
     });
   }

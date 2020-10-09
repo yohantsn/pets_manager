@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pets_manager/models/pets_model.dart';
+import 'package:pets_manager/models/pets/pets_model.dart';
 
 class PetController{
 

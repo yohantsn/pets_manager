@@ -1,34 +1,21 @@
-
-
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:pets_manager/controllers/home/home_controller.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
 
 class TabPerfilView extends StatefulWidget {
+  final HomeController homeController;
+  TabPerfilView({this.homeController});
+
   @override
   _TabPerfilViewState createState() => _TabPerfilViewState();
 }
 
 class _TabPerfilViewState extends State<TabPerfilView> {
-  File _file;
-  String _imgFile = "";
-
-  Future<void> _takePicture()async{
-    _file = await ImagePicker.pickImage(
-        source: ImageSource.camera,
-        preferredCameraDevice: CameraDevice.front,
-        imageQuality: 40);
-    setState(() {
-      _imgFile = _file.path;
-    });
-    return;
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: widget.homeController.color_Scheme.themeColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -53,14 +40,14 @@ class _TabPerfilViewState extends State<TabPerfilView> {
                           color: Colors.white,
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                              image: _imgFile.isNotEmpty
-                                  ? FileImage(File(_imgFile))
+                              image: widget.homeController.userModel.ownerPicProfile.isNotEmpty
+                                  ? NetworkImage(widget.homeController.userModel.ownerPicProfile)
                                   : AssetImage("assets/images/perfil_user.png"),
-                              fit: BoxFit.fill),
+                              fit: BoxFit.cover),
                         ),
                       ),
                       onTap: () {
-                        _takePicture();
+                        widget.homeController.takePicture();
                       },
                     ),
                     Positioned(
@@ -71,9 +58,9 @@ class _TabPerfilViewState extends State<TabPerfilView> {
                           Icons.camera_alt,
                           color: Color_Scheme.primaryColor,
                         ),
-                        backgroundColor: Colors.white,
+                        backgroundColor: widget.homeController.color_Scheme.themeColor,
                         onPressed: () {
-                          _takePicture();
+                          widget.homeController.takePicture();
                         },
                       ),
                     )

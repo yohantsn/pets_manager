@@ -45,7 +45,7 @@ mixin _$PetsForgetController on PetsForgetControllerStore, Store {
       AsyncAction('PetsForgetControllerStore.getListPetsForget');
 
   @override
-  Future getListPetsForget() {
+  Future<void> getListPetsForget() {
     return _$getListPetsForgetAsyncAction.run(() => super.getListPetsForget());
   }
 

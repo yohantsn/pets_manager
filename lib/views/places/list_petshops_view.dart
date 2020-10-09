@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
-import 'package:pets_manager/models/pet_places_model.dart';
-import 'package:pets_manager/views/pet/cadastro_pet_view.dart';
+import 'package:pets_manager/models/places/pet_places_model.dart';
 
 class ListPetShopsView extends StatefulWidget {
   final PetPlacesModel petPlacesModel;
+  final Color_Scheme color_scheme;
 
-  ListPetShopsView({@required this.petPlacesModel});
+  ListPetShopsView({@required this.petPlacesModel, this.color_scheme});
 
   @override
   _ListPetShopsViewState createState() => _ListPetShopsViewState();
@@ -22,8 +21,12 @@ class _ListPetShopsViewState extends State<ListPetShopsView> {
       appBar: AppBar(
         title: Text("PetShops próximos", style: TextStyle(color: Colors.white)),
         centerTitle: true,
+        backgroundColor: widget.color_scheme.primaryColorTheme,
+        iconTheme: IconThemeData(
+            color: Color_Scheme.secondaryLigthColor
+        ),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: widget.color_scheme.themeColor,
       body: isLoading
           ? Center(
               child: CircularProgressIndicator(),
@@ -44,6 +47,11 @@ class _ListPetShopsViewState extends State<ListPetShopsView> {
       child: Padding(
         padding: EdgeInsets.all(10),
         child: Card(
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+              side: BorderSide(color: Color_Scheme.secondaryColor),
+              borderRadius: BorderRadius.circular(10)),
+          color: widget.color_scheme.lightColorTheme,
           child: Container(
             height: 160,
             width: MediaQuery.of(context).size.width * 0.95,

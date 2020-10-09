@@ -1,6 +1,6 @@
 import 'package:mobx/mobx.dart';
-import 'package:pets_manager/models/pet_forget_model.dart';
-import 'package:pets_manager/repositories/pets_forget_repositorie.dart';
+import 'package:pets_manager/models/pets/pet_forget_model.dart';
+import 'package:pets_manager/repositories/pets/pets_forget_repositorie.dart';
 part 'pets_forget_controller.g.dart';
 
 class PetsForgetController = PetsForgetControllerStore with _$PetsForgetController;
@@ -14,7 +14,7 @@ abstract class PetsForgetControllerStore with Store{
   PetForgetModel petForgetModel = PetForgetModel();
 
   @action
-  void getListPetsForget() async{
+  Future<void> getListPetsForget() async {
     List<Map<String,dynamic>> _list = await PetsForgetRepositorie.getListPetsForgetRepositorie();
     List<PetForgetModel> _listPetsForget = List<PetForgetModel>();
     _list.forEach((element) {
@@ -25,7 +25,7 @@ abstract class PetsForgetControllerStore with Store{
   }
 
   @action
-  void getPetForgetById(String id, String uid) {
+  void getPetForgetById(String id, String uid)  {
     Map<String,dynamic> _map ;
     PetsForgetRepositorie.getPetForgetByIdRepositorie(id, uid).then((value){
       _map = value;

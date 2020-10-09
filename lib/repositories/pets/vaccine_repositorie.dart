@@ -1,4 +1,4 @@
-import 'package:pets_manager/models/vaccine_model.dart';
+import 'package:pets_manager/models/pets/vaccine_model.dart';
 
 class VaccineRepositorie{
   Future<List<VaccineModel>> getListVaccine({String idPet}) async{

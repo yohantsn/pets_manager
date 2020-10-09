@@ -1,7 +1,7 @@
 import 'package:latlong/latlong.dart';
-import 'package:location/location.dart';
-import 'package:pets_manager/models/petshop_model.dart';
-import 'package:pets_manager/models/veterinary_model.dart';
+import 'package:pets_manager/models/places/petshop_model.dart';
+import 'package:pets_manager/models/places/veterinary_model.dart';
+
 
 class PetPlacesModel{
   List<PetShopModel> listPetShops = List<PetShopModel>();

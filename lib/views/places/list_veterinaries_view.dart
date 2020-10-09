@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
-import 'package:pets_manager/models/pet_places_model.dart';
+import 'package:pets_manager/models/places/pet_places_model.dart';
 import 'package:pets_manager/views/pet/cadastro_pet_view.dart';
 
 class ListVeterinariesView extends StatefulWidget {
   final PetPlacesModel petPlacesModel;
+  final Color_Scheme color_scheme;
 
-  ListVeterinariesView({@required this.petPlacesModel});
+  ListVeterinariesView({@required this.petPlacesModel, this.color_scheme});
   @override
   _ListVeterinariesViewState createState() => _ListVeterinariesViewState();
 }
@@ -22,9 +23,13 @@ class _ListVeterinariesViewState extends State<ListVeterinariesView> {
           "Veterinários próximos",
           style: TextStyle(color: Colors.white),
         ),
+        iconTheme: IconThemeData(
+            color: Color_Scheme.secondaryLigthColor
+        ),
+        backgroundColor: widget.color_scheme.primaryColorTheme,
         centerTitle: true,
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: widget.color_scheme.themeColor,
       body: isLoading
           ? Center(
               child: CircularProgressIndicator(),
@@ -45,6 +50,11 @@ class _ListVeterinariesViewState extends State<ListVeterinariesView> {
       child: Padding(
         padding: EdgeInsets.all(5),
         child: Card(
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+              side: BorderSide(color: Color_Scheme.secondaryColor),
+              borderRadius: BorderRadius.circular(10)),
+          color: widget.color_scheme.lightColorTheme,
           child: Container(
             height: 160,
             width: MediaQuery.of(context).size.width * 0.95,

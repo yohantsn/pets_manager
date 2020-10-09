@@ -1,32 +1,54 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:pets_manager/controllers/home/home_controller.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
+import 'package:pets_manager/models/user/user_model.dart';
 import 'package:pets_manager/views/pet/list_pet_view.dart';
 import 'package:pets_manager/views/tabs_home/tab_home_view.dart';
 import 'package:pets_manager/views/tabs_home/tab_perfil_view.dart';
 
 class HomeView extends StatefulWidget {
+
+  final UserModel userModel;
+  HomeView({this.userModel});
+
   @override
   _HomeViewState createState() => _HomeViewState();
 }
 
 class _HomeViewState extends State<HomeView> {
-  String _nameUser = "Yohan";
   int _currentIndex = 1;
+  HomeController _homeController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _homeController = HomeController(userModel: widget.userModel);
+  }
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: Color_Scheme.darkColor,
+      backgroundColor: _homeController.color_Scheme.themeColor,
       bottomNavigationBar: BottomNavyBar(
-      backgroundColor: Color_Scheme.darkColor,
+      backgroundColor: _homeController.color_Scheme.themeColor,
         onItemSelected: onTabTapped, // new
         selectedIndex: _currentIndex,
         items: [
           BottomNavyBarItem(
-              icon: Icon(Icons.person_outline, color:  Color_Scheme.primaryColor,),
-              title: Text("Minha Conta"),
+              icon: Container(padding: EdgeInsets.only(bottom: 15, top: 15),
+                height: MediaQuery.of(context).size.height * 0.035,
+                width: MediaQuery.of(context).size.height * 0.035,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                      image: NetworkImage(widget.userModel.ownerPicProfile),
+                      fit: BoxFit.cover),
+                ),),
+              title: Text("Olá ${widget.userModel.ownerName}"),
               activeColor: Color_Scheme.primaryColor
           ),
           BottomNavyBarItem(
@@ -42,10 +64,10 @@ class _HomeViewState extends State<HomeView> {
         ],
       ),
       body: _currentIndex == 1
-          ? TabHomeView()
+          ? TabHomeView(homeController: _homeController,)
           : _currentIndex == 2
-          ? PetListView()
-          : TabPerfilView()
+          ? PetListView(homeController: _homeController, darkMode: widget.userModel.ownerModeDark,)
+          : TabPerfilView(homeController: _homeController,)
     );
   }
 

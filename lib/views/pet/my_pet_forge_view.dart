@@ -4,12 +4,14 @@ import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:pets_manager/controllers/pet/my_pet_forget_controller.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
 import 'package:pets_manager/core/commons_value.dart';
-import 'package:pets_manager/models/pets_model.dart';
+import 'package:pets_manager/models/pets/pets_model.dart';
 
 class MyPetForgetView extends StatefulWidget {
-  final PetsModel _petsModel;
+  final PetsModel petsModel;
+  final Color_Scheme color_scheme;
+  final bool darkMode;
 
-  MyPetForgetView(this._petsModel);
+  MyPetForgetView({this.petsModel, this.color_scheme, this.darkMode});
 
   @override
   _MyPetForgetViewState createState() => _MyPetForgetViewState();
@@ -38,12 +40,17 @@ class _MyPetForgetViewState extends State<MyPetForgetView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: widget.color_scheme.primaryColorTheme,
           title: Text(
             "Meu Pet Fugiu",
             style: TextStyle(color: Colors.white),
           ),
           centerTitle: true,
+          iconTheme: IconThemeData(
+              color: Color_Scheme.secondaryLigthColor
+          ),
         ),
+        backgroundColor: widget.color_scheme.themeColor,
         body: SafeArea(
             child: SingleChildScrollView(
                 child: _myPetController.isLoading
@@ -59,8 +66,8 @@ class _MyPetForgetViewState extends State<MyPetForgetView> {
                             padding: EdgeInsets.all(10),
                             child: Text(
                               "Selecione no mapa onde você viu "
-                              "${widget._petsModel.sex == "M" ? "o" : "a"} "
-                              "${widget._petsModel.namePet} pela última vez?",
+                              "${widget.petsModel.sex == "M" ? "o" : "a"} "
+                              "${widget.petsModel.namePet} pela última vez?",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 16,
@@ -75,7 +82,7 @@ class _MyPetForgetViewState extends State<MyPetForgetView> {
                             child: MapboxMap(
                               onMapCreated: _onMapCreated,
                               onStyleLoadedCallback: _onStyleLoaded,
-                              styleString: MapboxStyles.LIGHT,
+                              styleString: widget.darkMode ? MapboxStyles.DARK :MapboxStyles.LIGHT,
                               accessToken: CommonsValues().mapToken,
                               initialCameraPosition: CameraPosition(
                                   target: _myPetController.latLngClick,
@@ -131,7 +138,7 @@ class _MyPetForgetViewState extends State<MyPetForgetView> {
                                   ),
                                   onPressed: () {
                                     _myPetController.savePetForget(
-                                        widget._petsModel,
+                                        widget.petsModel,
                                         txtController.text ?? "");
                                   },
                                 )),

@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
-import 'package:pets_manager/repositories/list_especies.dart';
-import 'package:pets_manager/repositories/list_sex.dart';
+import 'package:pets_manager/repositories/general/list_especies.dart';
+import 'package:pets_manager/repositories/general/list_sex.dart';
 import 'package:pets_manager/views/pet/list_pet_view.dart';
 
 class NewPetScreen extends StatefulWidget {

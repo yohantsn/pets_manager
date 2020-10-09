@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
 import 'package:pets_manager/views/login/login_view.dart';
-
 import '../new_account/create_account_view.dart';
 
 class ApresentacaoScreen extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

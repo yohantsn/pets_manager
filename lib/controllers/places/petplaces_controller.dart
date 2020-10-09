@@ -1,8 +1,8 @@
 import 'package:latlong/latlong.dart';
 import 'package:location/location.dart';
 import 'package:pets_manager/core/location_manager.dart';
-import 'package:pets_manager/models/pet_places_model.dart';
-import 'package:pets_manager/repositories/petplaces_repositorie.dart';
+import 'package:pets_manager/models/places/pet_places_model.dart';
+import 'package:pets_manager/repositories/places/petplaces_repositorie.dart';
 
 class PetPlacesController {
   Future<PetPlacesModel> getPetPlaces() async {

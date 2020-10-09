@@ -1,28 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:pets_manager/controllers/places/petplaces_controller.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
-import 'package:pets_manager/models/pet_places_model.dart';
-import 'package:pets_manager/models/pets_model.dart';
+import 'package:pets_manager/models/places/pet_places_model.dart';
+import 'package:pets_manager/models/pets/pets_model.dart';
 import 'package:pets_manager/views/pet/my_pet_forge_view.dart';
 import 'package:pets_manager/views/pet/pet_vaccine_view.dart';
 import 'package:pets_manager/views/places/list_petshops_view.dart';
 import 'package:pets_manager/views/places/list_veterinaries_view.dart';
 
 class PetGeneralView extends StatelessWidget {
-  final PetsModel _petsModel;
+  final PetsModel petsModel;
+  final Color_Scheme color_scheme;
+  final bool darkMode;
 
-  PetGeneralView(this._petsModel);
+  PetGeneralView({this.petsModel, this.color_scheme, this.darkMode});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: color_scheme.primaryColorTheme,
+        iconTheme: IconThemeData(
+            color: Color_Scheme.secondaryLigthColor
+        ),
         title: Text(
           "Meu Pet",
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
       ),
+      backgroundColor: color_scheme.themeColor,
       body: SafeArea(
           child: SingleChildScrollView(
         child: Column(
@@ -43,12 +50,11 @@ class PetGeneralView extends StatelessWidget {
                     child: Card(
                         elevation: 5,
                         margin: EdgeInsets.only(right: 10),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                        color: Color_Scheme.colorRed,
                         child: Container(
                           height: MediaQuery.of(context).size.width * 0.40,
                           width: MediaQuery.of(context).size.width * 0.40,
-                          decoration: BoxDecoration(
-                              color: Color_Scheme.colorRed,
-                              borderRadius: BorderRadius.circular(5)),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -62,7 +68,7 @@ class PetGeneralView extends StatelessWidget {
                               Padding(
                                 padding: EdgeInsets.all(10),
                                 child: Text(
-                                  "${this._petsModel.namePet} Fugiu!",
+                                  "${this.petsModel.namePet} Fugiu!",
                                   style: TextStyle(
                                       fontSize: 18,
                                       color: Color_Scheme.primaryColor),
@@ -76,20 +82,22 @@ class PetGeneralView extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  MyPetForgetView(this._petsModel)));
+                              builder: (context) => MyPetForgetView(
+                                    petsModel: this.petsModel,
+                                    color_scheme: this.color_scheme,
+                                    darkMode: this.darkMode
+                                  )));
                     },
                   ),
                   GestureDetector(
                     child: Card(
                         elevation: 5,
                         margin: EdgeInsets.only(left: 10),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                        color: this.color_scheme.lightColorTheme,
                         child: Container(
                           height: MediaQuery.of(context).size.width * 0.40,
                           width: MediaQuery.of(context).size.width * 0.40,
-                          decoration: BoxDecoration(
-                              color: Color_Scheme.secondaryLigthColor,
-                              borderRadius: BorderRadius.circular(5)),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -117,7 +125,10 @@ class PetGeneralView extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => PetVaccinesView(petsModel: this._petsModel,)));
+                              builder: (context) => PetVaccinesView(
+                                    petsModel: this.petsModel,
+                                    color_scheme: this.color_scheme,
+                                  )));
                     },
                   ),
                 ],
@@ -133,12 +144,11 @@ class PetGeneralView extends StatelessWidget {
                     child: Card(
                         elevation: 5,
                         margin: EdgeInsets.only(right: 10),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                        color: this.color_scheme.lightColorTheme,
                         child: Container(
                           height: MediaQuery.of(context).size.width * 0.40,
                           width: MediaQuery.of(context).size.width * 0.40,
-                          decoration: BoxDecoration(
-                              color: Color_Scheme.secondaryLigthColor,
-                              borderRadius: BorderRadius.circular(5)),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -169,6 +179,7 @@ class PetGeneralView extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) => ListVeterinariesView(
                                       petPlacesModel: value,
+                                      color_scheme: this.color_scheme,
                                     )));
                       });
                     },
@@ -179,12 +190,11 @@ class PetGeneralView extends StatelessWidget {
                       child: Card(
                           elevation: 5,
                           margin: EdgeInsets.only(left: 10),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                          color: this.color_scheme.lightColorTheme,
                           child: Container(
                             height: MediaQuery.of(context).size.width * 0.40,
                             width: MediaQuery.of(context).size.width * 0.40,
-                            decoration: BoxDecoration(
-                                color: Color_Scheme.secondaryLigthColor,
-                                borderRadius: BorderRadius.circular(5)),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -216,6 +226,7 @@ class PetGeneralView extends StatelessWidget {
                               MaterialPageRoute(
                                   builder: (context) => ListPetShopsView(
                                         petPlacesModel: value,
+                                        color_scheme: this.color_scheme,
                                       )));
                         });
                       },
@@ -236,7 +247,7 @@ class PetGeneralView extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     side: BorderSide(color: Color_Scheme.secondaryColor),
                     borderRadius: BorderRadius.circular(10)),
-                color: Color_Scheme.secondaryLigthColor,
+                color: this.color_scheme.lightColorTheme,
                 child: Container(
                   margin: EdgeInsets.fromLTRB(5, 2, 5, 2),
                   height: 40,
@@ -257,7 +268,7 @@ class PetGeneralView extends StatelessWidget {
                       ),
                       Expanded(
                         child: Text(
-                          "Alterar dados ${this._petsModel.sex == "M" ? "do" : "da"} ${this._petsModel.namePet}",
+                          "Alterar dados ${this.petsModel.sex == "M" ? "do" : "da"} ${this.petsModel.namePet}",
                           style: TextStyle(
                               fontSize: 18, color: Color_Scheme.primaryColor),
                         ),
@@ -279,7 +290,7 @@ class PetGeneralView extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     side: BorderSide(color: Color_Scheme.secondaryColor),
                     borderRadius: BorderRadius.circular(10)),
-                color: Color_Scheme.secondaryLigthColor,
+                color: this.color_scheme.lightColorTheme,
                 child: Container(
                   margin: EdgeInsets.fromLTRB(5, 2, 5, 2),
                   height: 40,
@@ -322,7 +333,7 @@ class PetGeneralView extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     side: BorderSide(color: Color_Scheme.secondaryColor),
                     borderRadius: BorderRadius.circular(10)),
-                color: Color_Scheme.secondaryLigthColor,
+                color: this.color_scheme.lightColorTheme,
                 child: Container(
                   margin: EdgeInsets.fromLTRB(5, 2, 5, 2),
                   height: 40,
@@ -365,7 +376,7 @@ class PetGeneralView extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     side: BorderSide(color: Color_Scheme.secondaryColor),
                     borderRadius: BorderRadius.circular(10)),
-                color: Color_Scheme.secondaryLigthColor,
+                color: this.color_scheme.lightColorTheme,
                 child: Container(
                   margin: EdgeInsets.fromLTRB(5, 2, 5, 2),
                   height: 40,

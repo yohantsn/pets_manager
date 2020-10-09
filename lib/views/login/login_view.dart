@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
+import 'package:pets_manager/repositories/user/user_repositories.dart';
 
 import '../home_view.dart';
 class LoginScreen extends StatelessWidget {
@@ -77,7 +78,10 @@ class LoginScreen extends StatelessWidget {
                           borderRadius: new BorderRadius.circular(25.0),
                         ),
                         onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => HomeView()));
+                          UserRepositories().getUserModel().then((value){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => HomeView(userModel: value,)));
+                          });
+
                         },
                       )
                   ),
