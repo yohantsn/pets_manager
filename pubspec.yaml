@@ -39,6 +39,8 @@ dependencies:
   geocoder: ^0.2.1
   mobx: ^1.2.1+2
   flutter_mobx: ^1.1.0+2
+  firebase_core: ^0.5.0+1
+  firebase_crashlytics: ^0.2.1+1
 
 dev_dependencies:
   flutter_test:
