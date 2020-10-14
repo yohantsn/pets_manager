@@ -39,4 +39,10 @@ class VaccineRepositorie{
     });
     return _listVaccineModel;
   }
+
+  Future<void> addVaccine(VaccineModel vaccineModel)async{
+    print(vaccineModel.toJson().toString());
+    await  Future.delayed(Duration(seconds: 2));
+    //TODO-add firebase
+  }
 }

@@ -6,12 +6,12 @@ import 'package:pets_manager/repositories/pets/vaccine_repositorie.dart';
 
 part 'list_vaccine_controller.g.dart';
 
-class ListVaccineController = ListVaccineControllerStore
+class ListVaccineController = _ListVaccineControllerStore
     with _$ListVaccineController;
 
-abstract class ListVaccineControllerStore with Store {
+abstract class _ListVaccineControllerStore with Store {
 
-  ListVaccineControllerStore({@required PetsModel pets}){
+  _ListVaccineControllerStore({@required PetsModel pets}){
     this.petsModel = pets;
     getListVaccine();
   }
