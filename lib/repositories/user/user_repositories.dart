@@ -1,17 +1,36 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:pets_manager/models/user/user_model.dart';
 
-class UserRepositories{
-  Future<UserModel> getUserModel() async {
-    Map<String, dynamic> _mapUser = {
-      "owner_name": "Joseph Andrews",
-      "owner_phone" : "+5541997820585",
-      "owner_email" : "josephand@hotmail.com",
-      "owner_latitude" : -25.4816272,
-      "owner_longitude" : -49.2856461,
-      "owner_pic_profile" : "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      "owner_mode_dark" : false
-    };
-    UserModel userModel = UserModel.fromJson(_mapUser);
+class UserRepositories {
+  UserRepositories() {
+    this.fire = FirebaseFirestore.instance;
+  }
+
+  FirebaseFirestore fire;
+
+  Future<UserModel> getUserModel({String uid}) async {
+    QuerySnapshot querySnapshot = await this
+        .fire
+        .collection("users_data")
+        .doc(uid)
+        .collection("profile")
+        .get();
+
+    QueryDocumentSnapshot queryDocumentSnapshot = querySnapshot.docs.first;
+    UserModel userModel = UserModel.fromJson( queryDocumentSnapshot.data());
     return userModel;
   }
+
+  Future<void> createProfile({String uid, UserModel userModel}) async{
+    await this
+        .fire
+        .collection("users_data")
+        .doc(uid)
+        .collection("profile")
+        .add(userModel.toJson());
+  }
+
+  
 }

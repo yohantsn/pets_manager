@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:pets_manager/controllers/login/login_controller.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
-import 'package:pets_manager/repositories/user/user_repositories.dart';
 
-import '../home_view.dart';
 class LoginScreen extends StatelessWidget {
+  LoginController loginController = LoginController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: loginController.scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text("Login",style: TextStyle(
@@ -18,6 +19,7 @@ class LoginScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: SafeArea(
           child: Form(
+            key: loginController.formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,6 +38,7 @@ class LoginScreen extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                   child: TextFormField(
+                    controller: loginController.controllerEmail,
                     decoration: InputDecoration(
                       icon: Icon(Icons.alternate_email, color: Color_Scheme.primaryColor,),
                       labelText: "E-mail",
@@ -49,6 +52,8 @@ class LoginScreen extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 10, 20, 40),
                   child: TextFormField(
+                    controller: loginController.controllerPassword,
+                    obscureText: true,
                     decoration: InputDecoration(
                       icon: Icon(Icons.lock_outline, color: Color_Scheme.primaryColor,),
                       labelText: "Senha",
@@ -78,10 +83,7 @@ class LoginScreen extends StatelessWidget {
                           borderRadius: new BorderRadius.circular(25.0),
                         ),
                         onPressed: (){
-                          UserRepositories().getUserModel().then((value){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => HomeView(userModel: value,)));
-                          });
-
+                          loginController.signIn(context: context);
                         },
                       )
                   ),

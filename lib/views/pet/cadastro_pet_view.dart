@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
 import 'package:pets_manager/repositories/general/list_especies.dart';
 import 'package:pets_manager/repositories/general/list_sex.dart';
+import 'package:pets_manager/views/home_view.dart';
 import 'package:pets_manager/views/pet/list_pet_view.dart';
 
 class NewPetScreen extends StatefulWidget {
@@ -308,7 +309,7 @@ class _NewPetScreenState extends State<NewPetScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => PetListView()));
+                                builder: (context) => HomeView()));
                       },
                     )),
               ),
