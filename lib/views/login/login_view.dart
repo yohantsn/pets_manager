@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pets_manager/controllers/login/login_controller.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
 
@@ -37,32 +38,37 @@ class LoginScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                  child: TextFormField(
-                    controller: loginController.controllerEmail,
-                    decoration: InputDecoration(
-                      icon: Icon(Icons.alternate_email, color: Color_Scheme.primaryColor,),
-                      labelText: "E-mail",
-                      labelStyle: TextStyle(color: Color_Scheme.primaryColor),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color_Scheme.primaryColor),
-                      ),
-                    ),
-                  ),
+                  child: Observer(
+                    builder: (_)=>
+                        TextFormField(
+                          controller: loginController.controllerEmail,
+                          decoration: InputDecoration(
+                            icon: Icon(Icons.alternate_email, color: Color_Scheme.primaryColor,),
+                            labelText: "E-mail",
+                            labelStyle: TextStyle(color: Color_Scheme.primaryColor),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Color_Scheme.primaryColor),
+                            ),
+                          ),
+                        ),
+                  )
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 10, 20, 40),
-                  child: TextFormField(
-                    controller: loginController.controllerPassword,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      icon: Icon(Icons.lock_outline, color: Color_Scheme.primaryColor,),
-                      labelText: "Senha",
-                      labelStyle: TextStyle(color: Color_Scheme.primaryColor),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color_Scheme.primaryColor),
+                  child: Observer(
+                    builder: (_) => TextFormField(
+                      controller: loginController.controllerPassword,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        icon: Icon(Icons.lock_outline, color: Color_Scheme.primaryColor,),
+                        labelText: "Senha",
+                        labelStyle: TextStyle(color: Color_Scheme.primaryColor),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color_Scheme.primaryColor),
+                        ),
                       ),
                     ),
-                  ),
+                  )
                 ),
                 Padding(
                   padding: EdgeInsets.all(10),

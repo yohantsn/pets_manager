@@ -28,19 +28,21 @@ abstract class _LoginControllerStore with Store {
       String password = controllerPassword.text;
       String email = controllerEmail.text;
 
-      UserModel userModel =
-          AuthCore().authSignAccountEmail(email: email, password: password);
-      if(userModel.errorMsg.isEmpty) {
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    HomeView(
-                      userModel: userModel,
-                    )));
-      }else{
-        callSnackbar(userModel.errorMsg);
-      }
+      UserModel userModel;
+      AuthCore()
+          .authSignAccountEmail(email: email, password: password)
+          .then((value) {
+        if (value.errorMsg.isEmpty) {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => HomeView(
+                        userModel: userModel,
+                      )));
+        } else {
+          callSnackbar(value.errorMsg);
+        }
+      });
     }
   }
 

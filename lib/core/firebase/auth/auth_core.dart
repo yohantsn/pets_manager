@@ -47,25 +47,28 @@ class AuthCore {
     }
   }
 
-  UserModel authSignAccountEmail(
-      {@required String email, @required String password}) {
+  Future<UserModel> authSignAccountEmail (
+      {@required String email, @required String password}) async{
     UserModel user;
     try {
-      FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password)
-          .then((value) {});
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      user = await UserRepositories().getUserModel(uid: userCredential.user.uid);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         user = UserModel(errorMsg: "Usuario não encontrado.");
         print('No user found for that email.');
+        return user;
       } else if (e.code == 'wrong-password') {
         user = UserModel(errorMsg: "Usuário ou senhas incorretos.");
         print('Usuário ou senhas incorretos');
-      }else{
+        return user;
+      } else {
         user = UserModel(errorMsg: "Usuário ou senhas incorretos.");
         print('Usuário ou senhas incorretos');
+        return user;
       }
-      return user;
+
     }
   }
 
