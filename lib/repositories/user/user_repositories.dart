@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:pets_manager/models/user/user_model.dart';
 
 class UserRepositories {
@@ -9,9 +7,10 @@ class UserRepositories {
   }
 
   FirebaseFirestore fire;
+  QuerySnapshot querySnapshot;
 
   Future<UserModel> getUserModel({String uid}) async {
-    QuerySnapshot querySnapshot = await this
+    querySnapshot = await this
         .fire
         .collection("users_data")
         .doc(uid)
@@ -32,5 +31,15 @@ class UserRepositories {
         .add(userModel.toJson());
   }
 
+  Future<void> updateProfile({String uid, UserModel userModel}) async{
+    getUserModel(uid: uid);
+    await this
+        .fire
+        .collection("users_data")
+        .doc(uid)
+        .collection("profile")
+        .doc(querySnapshot.docs.first.id)
+        .set(userModel.toJson());
+  }
   
 }

@@ -24,7 +24,8 @@ class AuthCore {
             ownerName: value.user.displayName,
             ownerPhone: value.user.photoURL,
             ownerPicProfile: value.user.photoURL,
-            ownerModeDark: false);
+            ownerModeDark: false,
+            uid: value.user.uid);
         return user;
       });
     } on FirebaseException catch (e) {

@@ -48,6 +48,7 @@ dependencies:
   firebase_performance: ^0.4.0+2
   flutter_datetime_picker: ^1.4.0
   analyzer: ^0.40.4
+  fluttericon: ^1.0.7
 
 dev_dependencies:
   flutter_test:

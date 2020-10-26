@@ -49,7 +49,8 @@ abstract class _LoginControllerStore with Store {
   @action
   void callSnackbar(String content) {
     scaffoldKey.currentState.showSnackBar(SnackBar(
-      content: Text(content),
+      content: Text(content, style: TextStyle(fontSize: 18),
+        textAlign: TextAlign.center,),
       backgroundColor: Colors.red,
       duration: Duration(seconds: 5),
     ));

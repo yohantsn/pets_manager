@@ -8,6 +8,9 @@ class UserModel {
   bool ownerModeDark;
   bool isEmailVerified;
   String errorMsg;
+  String uid;
+  String codeValidation;
+  bool isPhoneVerified;
 
   UserModel(
       {this.ownerName,
@@ -18,7 +21,10 @@ class UserModel {
         this.ownerPicProfile,
         this.ownerModeDark,
       this.isEmailVerified,
-      this.errorMsg});
+      this.errorMsg,
+      this.uid,
+      this.codeValidation,
+      this.isPhoneVerified});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     ownerName = json['owner_name'];
@@ -29,6 +35,9 @@ class UserModel {
     ownerPicProfile = json['owner_pic_profile'];
     isEmailVerified = json['isEmailVerified'];
     errorMsg = json['errorMsg'];
+    uid = json['uid'];
+    codeValidation = json['codeValidation'];
+    isPhoneVerified = json['isPhoneVerified'];
   }
 
   Map<String, dynamic> toJson() {
@@ -42,6 +51,9 @@ class UserModel {
     data['owner_mode_dark'] = this.ownerModeDark;
     data['isEmailVerified'] = this.isEmailVerified;
     data['errorMsg'] = this.errorMsg;
+    data['uid'] = this.uid;
+    data['codeValidation'] = this.codeValidation;
+    data['isPhoneVerified'] = this.isPhoneVerified;
     return data;
   }
 }

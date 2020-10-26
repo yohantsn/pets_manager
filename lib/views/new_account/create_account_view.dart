@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:lottie/lottie.dart';
+import 'package:pets_manager/controllers/new_account/create_account_controller.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
-import 'package:pets_manager/views/pet/cadastro_pet_view.dart';
-import 'package:pets_manager/views/new_account/phone_number_view.dart';
+import 'package:fluttericon/iconic_icons.dart';
 
 class CreateAccountScreen extends StatelessWidget {
+  CreateAccountController _createAccountController = CreateAccountController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _createAccountController.scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text("Criar Conta",style: TextStyle(
@@ -17,6 +21,7 @@ class CreateAccountScreen extends StatelessWidget {
       body: SingleChildScrollView(
           child: SafeArea(
         child: Form(
+          key: _createAccountController.formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -28,6 +33,7 @@ class CreateAccountScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                 child: TextFormField(
+                  controller: _createAccountController.controllerName,
                   decoration: InputDecoration(
                     icon: Icon(
                       Icons.person_outline,
@@ -39,11 +45,17 @@ class CreateAccountScreen extends StatelessWidget {
                       borderSide: BorderSide(color: Color_Scheme.primaryColor),
                     ),
                   ),
+                  validator: (value){
+                    if(value.isEmpty){
+                      return "Nome é obrigatório.";
+                    }
+                  },
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                 child: TextFormField(
+                  controller: _createAccountController.controllerEmail,
                   decoration: InputDecoration(
                     icon: Icon(
                       Icons.alternate_email,
@@ -55,41 +67,99 @@ class CreateAccountScreen extends StatelessWidget {
                       borderSide: BorderSide(color: Color_Scheme.primaryColor),
                     ),
                   ),
+                  validator: (value){
+                    if(value.isEmpty){
+                      return "E-mail é obrigatório.";
+                    }
+                  },
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    icon: Icon(
-                      Icons.lock_outline,
-                      color: Color_Scheme.primaryColor,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Observer(
+                        builder: (_) => TextFormField(
+                          controller: _createAccountController.controllerPassword,
+                          decoration: InputDecoration(
+                            icon: Icon(
+                              Icons.lock_outline,
+                              color: Color_Scheme.primaryColor,
+                            ),
+                            labelText: "Senha",
+                            labelStyle: TextStyle(color: Color_Scheme.primaryColor),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Color_Scheme.primaryColor),
+                            ),
+                          ),
+                          obscureText: _createAccountController.obscuredPass,
+                          validator: (value){
+                            if(value.isEmpty){
+                              return "Senha é obrigatório.";
+                            }
+                          },
+                        ),
+                      )
                     ),
-                    labelText: "Senha",
-                    labelStyle: TextStyle(color: Color_Scheme.primaryColor),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Color_Scheme.primaryColor),
-                    ),
-                  ),
+                    Observer(
+                      builder: (_) => IconButton(
+                          icon: Lottie.asset(
+                              'assets/lotties/eyes.json',
+                              alignment: Alignment.center,
+                              fit: BoxFit.fill
+                          ),
+                          onPressed: (){
+                            _createAccountController..showPassword();
+                          }),
+                    )
+                  ],
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 10, 20, 40),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    icon: Icon(
-                      Icons.lock_outline,
-                      color: Color_Scheme.primaryColor,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child:Observer(
+                        builder: (_) =>  TextFormField(
+                          controller: _createAccountController.controllerConfPassword,
+                          decoration: InputDecoration(
+                            icon: Icon(
+                              Icons.lock_outline,
+                              color: Color_Scheme.primaryColor,
+                            ),
+                            labelText: "Confirmar senha",
+                            labelStyle: TextStyle(color: Color_Scheme.primaryColor),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Color_Scheme.primaryColor),
+                            ),
+                          ),
+                          obscureText: _createAccountController.obscuredConfPass,
+                          validator: (value){
+                            if(value.isEmpty){
+                              return "Confirmação da senha é obrigatório.";
+                            }else if(value != _createAccountController.controllerPassword.text){
+                              return "Senha e a confirmação não conferem";
+                            }
+                          },
+                        ),
+                      )
                     ),
-                    labelText: "Confirmar senha",
-                    labelStyle: TextStyle(color: Color_Scheme.primaryColor),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Color_Scheme.primaryColor),
-                    ),
-                  ),
+                    Observer(
+                      builder: (_) => IconButton(
+                          icon: Lottie.asset(
+                              'assets/lotties/eyes.json',
+                              alignment: Alignment.center,
+                              fit: BoxFit.fill
+                          ),
+                          onPressed: (){
+                            _createAccountController.showConfPassword();
+                          }),
+                    )
+                  ],
                 ),
               ),
-
               Padding(
                 padding: EdgeInsets.all(10),
                 child: SizedBox(
@@ -108,7 +178,7 @@ class CreateAccountScreen extends StatelessWidget {
                         borderRadius: new BorderRadius.circular(25.0),
                       ),
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => PhoneNumberView()));
+                        _createAccountController.createAccount(context: context);
                       },
                     )),
               ),
