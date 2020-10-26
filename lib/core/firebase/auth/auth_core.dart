@@ -108,4 +108,8 @@ class AuthCore {
   bool islogged() {
     return auth.currentUser.uid.isNotEmpty;
   }
+
+  String getUid(){
+    return auth.currentUser.uid;
+  }
 }

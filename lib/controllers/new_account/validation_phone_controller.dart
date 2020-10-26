@@ -2,6 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+import 'package:pets_manager/core/firebase/auth/auth_core.dart';
+import 'package:pets_manager/models/user/user_model.dart';
+import 'package:pets_manager/repositories/user/user_repositories.dart';
 import 'package:pets_manager/views/pet/cadastro_pet_view.dart';
 
 part 'validation_phone_controller.g.dart';
@@ -9,6 +12,8 @@ part 'validation_phone_controller.g.dart';
 class ValidationPhoneController = _ValidationPhoneController with _$ValidationPhoneController;
 
 abstract class _ValidationPhoneController with Store {
+
+  _ValidationPhoneController({this.userModel});
 
   @observable
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -31,12 +36,19 @@ abstract class _ValidationPhoneController with Store {
   @observable
   String n4 = "";
 
+  @observable
+  UserModel userModel;
+
+  @observable
+  String uid = "";
 
   @action
-  Future<bool> verifyCode(String code) async{
-    //TODO - add verify code with usermodel
-    await Future.delayed(Duration(seconds: 5));
-    return code == "1234";
+  Future<bool> verifyCode(String code) async {
+    if(this.userModel.codeValidation == null || this.userModel.codeValidation.isEmpty){
+      this.uid = AuthCore().getUid();
+      this.userModel = await UserRepositories().getUserModel(uid: uid);
+    }
+    return code == this.userModel.codeValidation;
   }
 
   @action
@@ -82,21 +94,21 @@ abstract class _ValidationPhoneController with Store {
   }
 
   @action
-  void validCode({BuildContext context}){
+  Future<void> validCode({BuildContext context}) async {
     String code = "$n1$n2$n3$n4";
     log(code);
-    verifyCode(code).then((value) {
-      if(value){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => NewPetScreen()));
-      }else{
-        n1 = "";
-        n2 = "";
-        n3 = "";
-        n4 = "";
-        callSnackbar("Código digitado é inválido");
-      }
-    });
-
+    bool value = await verifyCode(code);
+    if(value){
+      this.userModel.isPhoneVerified = true;
+      await UserRepositories().updateProfile(uid: this.userModel.uid, userModel: this.userModel);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => NewPetScreen()));
+    }else{
+      n1 = "";
+      n2 = "";
+      n3 = "";
+      n4 = "";
+      callSnackbar("Código digitado é inválido");
+    }
   }
 
   @action
