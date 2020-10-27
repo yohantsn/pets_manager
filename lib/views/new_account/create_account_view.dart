@@ -102,17 +102,15 @@ class CreateAccountScreen extends StatelessWidget {
                         ),
                       )
                     ),
-                    Observer(
-                      builder: (_) => IconButton(
-                          icon: Lottie.asset(
-                              'assets/lotties/eyes.json',
-                              alignment: Alignment.center,
-                              fit: BoxFit.fill
-                          ),
-                          onPressed: (){
-                            _createAccountController..showPassword();
-                          }),
-                    )
+                    IconButton(
+                        icon: Lottie.asset(
+                            'assets/lotties/eyes.json',
+                            alignment: Alignment.center,
+                            fit: BoxFit.fill
+                        ),
+                        onPressed: (){
+                          _createAccountController..showPassword();
+                        }),
                   ],
                 ),
               ),
@@ -146,17 +144,15 @@ class CreateAccountScreen extends StatelessWidget {
                         ),
                       )
                     ),
-                    Observer(
-                      builder: (_) => IconButton(
-                          icon: Lottie.asset(
-                              'assets/lotties/eyes.json',
-                              alignment: Alignment.center,
-                              fit: BoxFit.fill
-                          ),
-                          onPressed: (){
-                            _createAccountController.showConfPassword();
-                          }),
-                    )
+                    IconButton(
+                        icon: Lottie.asset(
+                            'assets/lotties/eyes.json',
+                            alignment: Alignment.center,
+                            fit: BoxFit.fill
+                        ),
+                        onPressed: (){
+                          _createAccountController.showConfPassword();
+                        }),
                   ],
                 ),
               ),

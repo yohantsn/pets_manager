@@ -115,12 +115,50 @@ mixin _$ValidationPhoneController on _ValidationPhoneController, Store {
     });
   }
 
+  final _$userModelAtom = Atom(name: '_ValidationPhoneController.userModel');
+
+  @override
+  UserModel get userModel {
+    _$userModelAtom.reportRead();
+    return super.userModel;
+  }
+
+  @override
+  set userModel(UserModel value) {
+    _$userModelAtom.reportWrite(value, super.userModel, () {
+      super.userModel = value;
+    });
+  }
+
+  final _$uidAtom = Atom(name: '_ValidationPhoneController.uid');
+
+  @override
+  String get uid {
+    _$uidAtom.reportRead();
+    return super.uid;
+  }
+
+  @override
+  set uid(String value) {
+    _$uidAtom.reportWrite(value, super.uid, () {
+      super.uid = value;
+    });
+  }
+
   final _$verifyCodeAsyncAction =
       AsyncAction('_ValidationPhoneController.verifyCode');
 
   @override
   Future<bool> verifyCode(String code) {
     return _$verifyCodeAsyncAction.run(() => super.verifyCode(code));
+  }
+
+  final _$validCodeAsyncAction =
+      AsyncAction('_ValidationPhoneController.validCode');
+
+  @override
+  Future<void> validCode({BuildContext context}) {
+    return _$validCodeAsyncAction.run(() => super.validCode(context: context));
   }
 
   final _$_ValidationPhoneControllerActionController =
@@ -149,17 +187,6 @@ mixin _$ValidationPhoneController on _ValidationPhoneController, Store {
   }
 
   @override
-  void validCode({BuildContext context}) {
-    final _$actionInfo = _$_ValidationPhoneControllerActionController
-        .startAction(name: '_ValidationPhoneController.validCode');
-    try {
-      return super.validCode(context: context);
-    } finally {
-      _$_ValidationPhoneControllerActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void callSnackbar(String content) {
     final _$actionInfo = _$_ValidationPhoneControllerActionController
         .startAction(name: '_ValidationPhoneController.callSnackbar');
@@ -179,7 +206,9 @@ isValid: ${isValid},
 n1: ${n1},
 n2: ${n2},
 n3: ${n3},
-n4: ${n4}
+n4: ${n4},
+userModel: ${userModel},
+uid: ${uid}
     ''';
   }
 }

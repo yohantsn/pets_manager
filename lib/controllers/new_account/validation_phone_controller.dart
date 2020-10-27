@@ -11,7 +11,7 @@ part 'validation_phone_controller.g.dart';
 
 class ValidationPhoneController = _ValidationPhoneController with _$ValidationPhoneController;
 
-abstract class _ValidationPhoneController with Store {
+abstract class _ValidationPhoneController extends UserRepositories with Store {
 
   _ValidationPhoneController({this.userModel});
 
@@ -46,7 +46,7 @@ abstract class _ValidationPhoneController with Store {
   Future<bool> verifyCode(String code) async {
     if(this.userModel.codeValidation == null || this.userModel.codeValidation.isEmpty){
       this.uid = AuthCore().getUid();
-      this.userModel = await UserRepositories().getUserModel(uid: uid);
+      this.userModel = await getUserModel(uid: uid);
     }
     return code == this.userModel.codeValidation;
   }
@@ -100,8 +100,8 @@ abstract class _ValidationPhoneController with Store {
     bool value = await verifyCode(code);
     if(value){
       this.userModel.isPhoneVerified = true;
-      await UserRepositories().updateProfile(uid: this.userModel.uid, userModel: this.userModel);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => NewPetScreen()));
+      await updateProfile(uid: this.userModel.uid, userModel: this.userModel);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => NewPetScreen(userModel: this.userModel,)));
     }else{
       n1 = "";
       n2 = "";

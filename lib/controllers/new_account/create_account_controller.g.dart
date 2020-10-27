@@ -136,19 +136,17 @@ mixin _$CreateAccountController on _CreateAccountController, Store {
     });
   }
 
-  final _$_CreateAccountControllerActionController =
-      ActionController(name: '_CreateAccountController');
+  final _$createAccountAsyncAction =
+      AsyncAction('_CreateAccountController.createAccount');
 
   @override
-  void createAccount({BuildContext context}) {
-    final _$actionInfo = _$_CreateAccountControllerActionController.startAction(
-        name: '_CreateAccountController.createAccount');
-    try {
-      return super.createAccount(context: context);
-    } finally {
-      _$_CreateAccountControllerActionController.endAction(_$actionInfo);
-    }
+  Future<void> createAccount({BuildContext context}) {
+    return _$createAccountAsyncAction
+        .run(() => super.createAccount(context: context));
   }
+
+  final _$_CreateAccountControllerActionController =
+      ActionController(name: '_CreateAccountController');
 
   @override
   void showPassword() {

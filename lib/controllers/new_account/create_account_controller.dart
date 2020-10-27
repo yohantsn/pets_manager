@@ -36,18 +36,18 @@ abstract class _CreateAccountController with Store {
   bool obscuredConfPass = true;
 
   @action
-  void createAccount({BuildContext context}) {
+  Future<void> createAccount({BuildContext context}) async {
     if (formKey.currentState.validate()) {
-      UserModel userModel = AuthCore().authCreateAccountEmail(
+      UserModel userModel = await AuthCore().authCreateAccountEmail(
           email: controllerEmail.text, password: controllerPassword.text);
-      if (userModel.errorMsg.isEmpty) {
+      if (userModel.errorMsg == null || userModel.errorMsg.isEmpty) {
         userModel.ownerName = controllerName.text;
         userModel.ownerEmail = controllerEmail.text;
         UserRepositories()
             .createProfile(userModel: userModel, uid: userModel.uid)
             .then((value) {
           Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => PhoneNumberView()));
+              MaterialPageRoute(builder: (context) => PhoneNumberView(userModel: userModel,)));
         });
       }else{
         callSnackbar(userModel.errorMsg);

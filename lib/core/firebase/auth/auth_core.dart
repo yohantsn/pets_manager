@@ -4,30 +4,28 @@ import 'package:flutter/cupertino.dart';
 import 'package:pets_manager/models/user/user_model.dart';
 import 'package:pets_manager/repositories/user/user_repositories.dart';
 
-class AuthCore {
+class AuthCore extends UserRepositories {
   FirebaseAuth auth;
-  UserRepositories userRepositories;
   AuthCore() {
     this.auth = FirebaseAuth.instance;
   }
 
-  UserModel authCreateAccountEmail(
-      {@required String email, @required String password}) {
+  Future<UserModel> authCreateAccountEmail(
+      {@required String email, @required String password}) async {
     UserModel user;
     try {
-      this
+      UserCredential userCredential = await this
           .auth
-          .createUserWithEmailAndPassword(email: email, password: password)
-          .then((value) {
-        user = UserModel(
-            ownerEmail: value.user.email,
-            ownerName: value.user.displayName,
-            ownerPhone: value.user.photoURL,
-            ownerPicProfile: value.user.photoURL,
-            ownerModeDark: false,
-            uid: value.user.uid);
-        return user;
-      });
+          .createUserWithEmailAndPassword(email: email, password: password);
+
+      user = UserModel(
+          ownerEmail: userCredential.user.email,
+          ownerName: userCredential.user.displayName,
+          ownerPhone: userCredential.user.photoURL,
+          ownerPicProfile: userCredential.user.photoURL,
+          ownerModeDark: false,
+          uid: userCredential.user.uid);
+      return user;
     } on FirebaseException catch (e) {
       if (e.code == 'weak-password') {
         user = UserModel(
@@ -37,6 +35,8 @@ class AuthCore {
       } else if (e.code == 'email-already-in-use') {
         user = UserModel(errorMsg: "Email ja cadastrado.");
         print('The account already exists for that email.');
+      } else {
+        user = UserModel(errorMsg: "Email ja cadastrado.");
       }
       return user;
     } catch (e) {
@@ -48,13 +48,14 @@ class AuthCore {
     }
   }
 
-  Future<UserModel> authSignAccountEmail (
-      {@required String email, @required String password}) async{
+  Future<UserModel> authSignAccountEmail(
+      {@required String email, @required String password}) async {
     UserModel user;
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      user = await UserRepositories().getUserModel(uid: userCredential.user.uid);
+      user =
+          await UserRepositories().getUserModel(uid: userCredential.user.uid);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         user = UserModel(errorMsg: "Usuario não encontrado.");
@@ -69,7 +70,6 @@ class AuthCore {
         print('Usuário ou senhas incorretos');
         return user;
       }
-
     }
   }
 
@@ -85,9 +85,7 @@ class AuthCore {
       await auth.checkActionCode(code);
       await auth.applyActionCode(code);
       auth.currentUser.reload();
-      userRepositories
-          .getUserModel(uid: auth.currentUser.uid.toString())
-          .then((value) {
+      getUserModel(uid: auth.currentUser.uid.toString()).then((value) {
         user = value;
         user.isEmailVerified = auth.currentUser.emailVerified;
         return user;
@@ -109,7 +107,7 @@ class AuthCore {
     return auth.currentUser.uid.isNotEmpty;
   }
 
-  String getUid(){
+  String getUid() {
     return auth.currentUser.uid;
   }
 }

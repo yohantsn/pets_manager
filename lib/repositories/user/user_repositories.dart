@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pets_manager/models/user/user_model.dart';
 
-class UserRepositories {
+ class UserRepositories {
   UserRepositories() {
     this.fire = FirebaseFirestore.instance;
   }

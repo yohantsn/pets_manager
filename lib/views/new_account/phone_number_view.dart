@@ -63,6 +63,7 @@ class PhoneNumberView extends StatelessWidget {
                                 TextStyle(color: Color_Scheme.primaryColor),
                           ),
                           style: TextStyle(color: Color_Scheme.primaryColor),
+                          keyboardType: TextInputType.number,
                         ),
                       )
                     ],
