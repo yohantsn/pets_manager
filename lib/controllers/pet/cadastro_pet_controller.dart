@@ -129,10 +129,10 @@ abstract class _CadastroPetController extends PetRepositories with Store {
         this.isLoading = false;
         showDialog(context);
       } else if (this.file != null) {
-        mapUpdate = await updateImagePet(this.userModel.uid, this.file);
+        mapUpdate = await uploadImagePet(this.userModel.uid, this.file);
       }
-      if (mapUpdate.containsKey("error")) {
-        callSnackbar(mapUpdate["error"]);
+      if (mapUpdate == null || mapUpdate.containsKey("error")) {
+        callSnackbar(mapUpdate["error"] ?? "Erro");
         return;
       }
       PetsModel petsModel = PetsModel(

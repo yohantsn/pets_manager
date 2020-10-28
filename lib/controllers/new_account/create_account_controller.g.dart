@@ -104,6 +104,21 @@ mixin _$CreateAccountController on _CreateAccountController, Store {
     });
   }
 
+  final _$controllerAtom = Atom(name: '_CreateAccountController.controller');
+
+  @override
+  MaskedTextController get controller {
+    _$controllerAtom.reportRead();
+    return super.controller;
+  }
+
+  @override
+  set controller(MaskedTextController value) {
+    _$controllerAtom.reportWrite(value, super.controller, () {
+      super.controller = value;
+    });
+  }
+
   final _$obscuredPassAtom =
       Atom(name: '_CreateAccountController.obscuredPass');
 
@@ -133,6 +148,21 @@ mixin _$CreateAccountController on _CreateAccountController, Store {
   set obscuredConfPass(bool value) {
     _$obscuredConfPassAtom.reportWrite(value, super.obscuredConfPass, () {
       super.obscuredConfPass = value;
+    });
+  }
+
+  final _$isLoadingAtom = Atom(name: '_CreateAccountController.isLoading');
+
+  @override
+  bool get isLoading {
+    _$isLoadingAtom.reportRead();
+    return super.isLoading;
+  }
+
+  @override
+  set isLoading(bool value) {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
+      super.isLoading = value;
     });
   }
 
@@ -190,8 +220,10 @@ controllerEmail: ${controllerEmail},
 controllerPassword: ${controllerPassword},
 controllerConfPassword: ${controllerConfPassword},
 controllerName: ${controllerName},
+controller: ${controller},
 obscuredPass: ${obscuredPass},
-obscuredConfPass: ${obscuredConfPass}
+obscuredConfPass: ${obscuredConfPass},
+isLoading: ${isLoading}
     ''';
   }
 }

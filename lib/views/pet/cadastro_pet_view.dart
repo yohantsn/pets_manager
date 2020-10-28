@@ -26,6 +26,7 @@ class _NewPetScreenState extends State<NewPetScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _cadastroPetController.scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
@@ -39,6 +40,7 @@ class _NewPetScreenState extends State<NewPetScreen> {
           child: SafeArea(
               child: Observer(
         builder: (_) => Form(
+          key: _cadastroPetController.formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -232,6 +234,7 @@ class _NewPetScreenState extends State<NewPetScreen> {
                   padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                   child: TextFormField(
                     controller: _cadastroPetController.controllerDateNasc,
+                    readOnly: true,
                     decoration: InputDecoration(
                       icon: Icon(
                         Icons.calendar_today,
@@ -311,10 +314,7 @@ class _NewPetScreenState extends State<NewPetScreen> {
                         borderRadius: new BorderRadius.circular(25.0),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomeView()));
+                       _cadastroPetController.savePet(context: context, isContinued: false);
                       },
                     )),
               ),

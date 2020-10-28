@@ -24,7 +24,8 @@ class AuthCore extends UserRepositories {
           ownerPhone: userCredential.user.photoURL,
           ownerPicProfile: userCredential.user.photoURL,
           ownerModeDark: false,
-          uid: userCredential.user.uid);
+          uid: userCredential.user.uid,
+          errorMsg: "");
       return user;
     } on FirebaseException catch (e) {
       if (e.code == 'weak-password') {
@@ -55,7 +56,9 @@ class AuthCore extends UserRepositories {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       user =
-          await UserRepositories().getUserModel(uid: userCredential.user.uid);
+          await getUserModel(uid: userCredential.user.uid);
+      user.errorMsg = "";
+      return user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         user = UserModel(errorMsg: "Usuario não encontrado.");

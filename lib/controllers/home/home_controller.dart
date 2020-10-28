@@ -1,7 +1,10 @@
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
+import 'package:pets_manager/models/pets/pets_model.dart';
 import 'package:pets_manager/models/user/user_model.dart';
+import 'package:pets_manager/repositories/pets/pet_repositories.dart';
+import 'package:pets_manager/repositories/user/user_repositories.dart';
 
 part 'home_controller.g.dart';
 
@@ -19,6 +22,11 @@ abstract class HomeControllerStore with Store{
   @observable
   Color_Scheme color_Scheme;
 
+  @observable
+  List<PetsModel> listPetsModels = List<PetsModel>();
+
+  @observable
+  bool isLoading = false;
 
   @action
   Future<void> takePicture() async{
@@ -28,5 +36,12 @@ abstract class HomeControllerStore with Store{
         imageQuality: 40).then((value) {
 
     });
+  }
+
+  @action
+  Future<void> getListPet() async{
+   this.isLoading = true;
+   this.listPetsModels = await PetRepositories().getListPets(uid: this.userModel.uid);
+   this.isLoading = false;
   }
 }

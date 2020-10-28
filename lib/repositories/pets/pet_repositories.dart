@@ -23,18 +23,38 @@ class PetRepositories{
         .add(petsModel.toJson());
   }
 
-  Future<Map<String, dynamic>> updateImagePet(String uid, File imgFile) async{
-    Map<String, dynamic> result;
+  Future<Map<String, dynamic>> uploadImagePet(String uid, File imgFile) async{
+    Map<String, dynamic> result = Map<String, dynamic>();
 
+      String nameImage = DateTime.now().toUtc().millisecondsSinceEpoch.toString();
+      firebase_storage.UploadTask storage =  firebase_storage.FirebaseStorage.instance
+          .ref('$uid/pets_profile/${nameImage}.jpg').putFile(imgFile);
     try {
-      firebase_storage.TaskSnapshot task = await firebase_storage.FirebaseStorage.instance
-          .ref('$uid/pets_profile/')
-          .putFile(imgFile);
-      result["urlPic"] = await task.ref.getDownloadURL();
+      await storage;
+      if(storage.snapshot.state == firebase_storage.TaskState.success) {
+        result["urlPic"] = await storage.snapshot.ref.getDownloadURL();
+      }
+      return result;
     } on FirebaseException catch (e) {
       // e.g, e.code == 'canceled'
       result["error"] = "Tivemos um problema ao fazer o upload da imagem, por favor, tente novamente";
+      return result;
     }
-    return result;
+
+  }
+
+  Future<List<PetsModel>> getListPets({String uid}) async{
+    List<PetsModel> listPetsModel = List<PetsModel>();
+    querySnapshot = await this
+        .fire
+        .collection("users_data")
+        .doc(uid)
+        .collection("pets")
+        .get();
+
+    querySnapshot.docs.forEach((element) {
+      listPetsModel.add(PetsModel.fromJson(element.data()));
+    });
+    return listPetsModel;
   }
 }

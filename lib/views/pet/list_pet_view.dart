@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pets_manager/controllers/home/home_controller.dart';
 import 'package:pets_manager/controllers/pet/pet_contoller.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
@@ -23,13 +24,7 @@ class _PetListViewState extends State<PetListView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    PetController().getListPet().then((value) {
-      setState(() {
-        isLoading = false;
-        _list = value;
-        print(_list);
-      });
-    });
+    widget.homeController.getListPet();
   }
 
   @override
@@ -42,21 +37,23 @@ class _PetListViewState extends State<PetListView> {
             color: widget.homeController.color_Scheme.themeColor),
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => NewPetScreen()));
+              context, MaterialPageRoute(builder: (context) => NewPetScreen(userModel: widget.homeController.userModel,)));
         },
       ),
-      body: isLoading
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : _list == null
-              ? Container()
-              : ListView.builder(
-                  itemCount: _list.length,
-                  itemBuilder: (context, index) {
-                    return _petCard(context, index);
-                  },
-                ),
+      body: Observer(
+        builder: (_) => widget.homeController.isLoading
+            ? Center(
+          child: CircularProgressIndicator(),
+        )
+            : widget.homeController.listPetsModels == null
+            ? Container()
+            : ListView.builder(
+          itemCount: widget.homeController.listPetsModels.length,
+          itemBuilder: (context, index) {
+            return _petCard(context, index);
+          },
+        ),
+      )
     );
   }
 
@@ -84,7 +81,10 @@ class _PetListViewState extends State<PetListView> {
                     color: widget.homeController.color_Scheme.lightColorTheme,
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                        image: NetworkImage("${_list[index].photoPet}"),
+                        image: widget.homeController.listPetsModels[index].photoPet != null &&
+                            widget.homeController.listPetsModels[index].photoPet.isNotEmpty
+                        ? NetworkImage("${widget.homeController.listPetsModels[index].photoPet}")
+                        : AssetImage("assets/images/cao.png"),
                         fit: BoxFit.cover),
                   ),
                 ),
@@ -96,7 +96,7 @@ class _PetListViewState extends State<PetListView> {
                         Padding(
                           padding: EdgeInsets.all(3),
                           child: Text(
-                            "${_list[index].namePet}",
+                            "${widget.homeController.listPetsModels[index].namePet}",
                             style: TextStyle(
                                 fontSize: 16,
                                 color: Color_Scheme.primaryColor,
@@ -106,7 +106,7 @@ class _PetListViewState extends State<PetListView> {
                         Padding(
                           padding: EdgeInsets.all(3),
                           child: Text(
-                            "${_list[index].speciePet} / ${_list[index].breedPet}",
+                            "${widget.homeController.listPetsModels[index].speciePet} / ${widget.homeController.listPetsModels[index].breedPet}",
                             style: TextStyle(
                                 fontSize: 14,
                                 color: Color_Scheme.primaryColor,
@@ -116,7 +116,7 @@ class _PetListViewState extends State<PetListView> {
                         Padding(
                           padding: EdgeInsets.all(3),
                           child: Text(
-                            "${_list[index].dateNascPet} / ${_list[index].colorPet}",
+                            "${widget.homeController.listPetsModels[index].dateNascPet} / ${widget.homeController.listPetsModels[index].colorPet}",
                             style: TextStyle(
                                 fontSize: 14,
                                 color: Color_Scheme.primaryColor,
@@ -137,7 +137,7 @@ class _PetListViewState extends State<PetListView> {
             context,
             MaterialPageRoute(
                 builder: (context) => PetGeneralView(
-                      petsModel: _list[index],
+                      petsModel: widget.homeController.listPetsModels[index],
                       color_scheme: widget.homeController.color_Scheme,
                       darkMode: widget.darkMode,
                     )));

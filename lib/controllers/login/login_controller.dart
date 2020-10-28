@@ -9,7 +9,7 @@ part 'login_controller.g.dart';
 
 class LoginController = _LoginControllerStore with _$LoginController;
 
-abstract class _LoginControllerStore with Store {
+abstract class _LoginControllerStore extends AuthCore with Store {
   @observable
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -29,15 +29,14 @@ abstract class _LoginControllerStore with Store {
       String email = controllerEmail.text;
 
       UserModel userModel;
-      AuthCore()
-          .authSignAccountEmail(email: email, password: password)
+      authSignAccountEmail(email: email, password: password)
           .then((value) {
         if (value.errorMsg.isEmpty) {
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                   builder: (context) => HomeView(
-                        userModel: userModel,
+                        userModel: value
                       )));
         } else {
           callSnackbar(value.errorMsg);

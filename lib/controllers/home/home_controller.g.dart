@@ -39,6 +39,36 @@ mixin _$HomeController on HomeControllerStore, Store {
     });
   }
 
+  final _$listPetsModelsAtom = Atom(name: 'HomeControllerStore.listPetsModels');
+
+  @override
+  List<PetsModel> get listPetsModels {
+    _$listPetsModelsAtom.reportRead();
+    return super.listPetsModels;
+  }
+
+  @override
+  set listPetsModels(List<PetsModel> value) {
+    _$listPetsModelsAtom.reportWrite(value, super.listPetsModels, () {
+      super.listPetsModels = value;
+    });
+  }
+
+  final _$isLoadingAtom = Atom(name: 'HomeControllerStore.isLoading');
+
+  @override
+  bool get isLoading {
+    _$isLoadingAtom.reportRead();
+    return super.isLoading;
+  }
+
+  @override
+  set isLoading(bool value) {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
+      super.isLoading = value;
+    });
+  }
+
   final _$takePictureAsyncAction =
       AsyncAction('HomeControllerStore.takePicture');
 
@@ -47,11 +77,20 @@ mixin _$HomeController on HomeControllerStore, Store {
     return _$takePictureAsyncAction.run(() => super.takePicture());
   }
 
+  final _$getListPetAsyncAction = AsyncAction('HomeControllerStore.getListPet');
+
+  @override
+  Future<void> getListPet() {
+    return _$getListPetAsyncAction.run(() => super.getListPet());
+  }
+
   @override
   String toString() {
     return '''
 userModel: ${userModel},
-color_Scheme: ${color_Scheme}
+color_Scheme: ${color_Scheme},
+listPetsModels: ${listPetsModels},
+isLoading: ${isLoading}
     ''';
   }
 }

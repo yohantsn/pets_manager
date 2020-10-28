@@ -34,6 +34,7 @@ class UserModel {
     ownerLongitude = json['owner_longitude'];
     ownerPicProfile = json['owner_pic_profile'];
     isEmailVerified = json['isEmailVerified'];
+    ownerModeDark = json['owner_mode_dark'];
     errorMsg = json['errorMsg'];
     uid = json['uid'];
     codeValidation = json['codeValidation'];
@@ -50,7 +51,6 @@ class UserModel {
     data['owner_pic_profile'] = this.ownerPicProfile;
     data['owner_mode_dark'] = this.ownerModeDark;
     data['isEmailVerified'] = this.isEmailVerified;
-    data['errorMsg'] = this.errorMsg;
     data['uid'] = this.uid;
     data['codeValidation'] = this.codeValidation;
     data['isPhoneVerified'] = this.isPhoneVerified;

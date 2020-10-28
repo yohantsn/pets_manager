@@ -45,7 +45,9 @@ class _HomeViewState extends State<HomeView> {
                   color: Colors.white,
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                      image: NetworkImage(widget.userModel.ownerPicProfile),
+                      image: widget.userModel.ownerPicProfile != null && widget.userModel.ownerPicProfile.isNotEmpty
+                          ? NetworkImage(widget.userModel.ownerPicProfile)
+                      : AssetImage("assets/images/perfil_user.png"),
                       fit: BoxFit.cover),
                 ),),
               title: Text("Olá ${widget.userModel.ownerName}"),
