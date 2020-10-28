@@ -4,13 +4,14 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pets_manager/controllers/pet/new_vaccine_controller.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
 import 'package:pets_manager/models/pets/pets_model.dart';
-
+import 'package:pets_manager/models/user/user_model.dart';
 
 class NewVaccineView extends StatefulWidget {
   final PetsModel petsModel;
   final Color_Scheme color_scheme;
+  final UserModel userModel;
 
-  NewVaccineView({this.color_scheme, this.petsModel});
+  NewVaccineView({this.color_scheme, this.petsModel, this.userModel});
 
   @override
   _NewVaccineViewState createState() => _NewVaccineViewState();
@@ -23,7 +24,10 @@ class _NewVaccineViewState extends State<NewVaccineView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _newVaccineController = NewVaccineController(color_scheme: widget.color_scheme);
+    _newVaccineController = NewVaccineController(
+        color_scheme: widget.color_scheme,
+        petsModels: widget.petsModel,
+        userModel: widget.userModel);
   }
 
   @override
@@ -41,11 +45,11 @@ class _NewVaccineViewState extends State<NewVaccineView> {
         backgroundColor: widget.color_scheme.themeColor,
         body: SafeArea(
             child: Observer(
-              builder: (_) => _newVaccineController.isLoading
-                  ? Center(
-                child: CircularProgressIndicator(),
-              )
-                  : Form(
+          builder: (_) => _newVaccineController.isLoading
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Form(
                   key: _newVaccineController.formKey,
                   child: SingleChildScrollView(
                     child: Column(
@@ -61,10 +65,9 @@ class _NewVaccineViewState extends State<NewVaccineView> {
                             child: Observer(
                               builder: (_) => TextFormField(
                                 controller:
-                                _newVaccineController.controllerName,
-                                style: TextStyle(
-                                    color: Color_Scheme.primaryColor
-                                ),
+                                    _newVaccineController.controllerName,
+                                style:
+                                    TextStyle(color: Color_Scheme.primaryColor),
                                 decoration: InputDecoration(
                                   labelText: "Nome",
                                   labelStyle: TextStyle(
@@ -86,10 +89,9 @@ class _NewVaccineViewState extends State<NewVaccineView> {
                             child: Observer(
                               builder: (_) => TextFormField(
                                 controller:
-                                _newVaccineController.controllerMaker,
-                                style: TextStyle(
-                                    color: Color_Scheme.primaryColor
-                                ),
+                                    _newVaccineController.controllerMaker,
+                                style:
+                                    TextStyle(color: Color_Scheme.primaryColor),
                                 decoration: InputDecoration(
                                   labelText: "Marca",
                                   labelStyle: TextStyle(
@@ -120,13 +122,12 @@ class _NewVaccineViewState extends State<NewVaccineView> {
                                           controller: _newVaccineController
                                               .controllerDateApl,
                                           style: TextStyle(
-                                              color: Color_Scheme.primaryColor
-                                          ),
+                                              color: Color_Scheme.primaryColor),
                                           decoration: InputDecoration(
                                             labelText: "Data da Aplicação",
                                             labelStyle: TextStyle(
                                                 color:
-                                                Color_Scheme.primaryColor),
+                                                    Color_Scheme.primaryColor),
                                             enabledBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: Color_Scheme
@@ -140,8 +141,9 @@ class _NewVaccineViewState extends State<NewVaccineView> {
                                               return "Data de Aplicação é obrigatória.";
                                             }
                                           },
-                                          onTap: (){
-                                            _newVaccineController.showDatePicker(context, true);
+                                          onTap: () {
+                                            _newVaccineController
+                                                .showDatePicker(context, true);
                                           },
                                         ),
                                       ))),
@@ -154,13 +156,12 @@ class _NewVaccineViewState extends State<NewVaccineView> {
                                               .controllerDateRet,
                                           readOnly: true,
                                           style: TextStyle(
-                                              color: Color_Scheme.primaryColor
-                                          ),
+                                              color: Color_Scheme.primaryColor),
                                           decoration: InputDecoration(
                                             labelText: "Data do Retorno",
                                             labelStyle: TextStyle(
                                                 color:
-                                                Color_Scheme.primaryColor),
+                                                    Color_Scheme.primaryColor),
                                             enabledBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: Color_Scheme
@@ -173,8 +174,9 @@ class _NewVaccineViewState extends State<NewVaccineView> {
                                               return "Data de retorno é obrigatório.";
                                             }
                                           },
-                                          onTap: (){
-                                            _newVaccineController.showDatePicker(context, false);
+                                          onTap: () {
+                                            _newVaccineController
+                                                .showDatePicker(context, false);
                                           },
                                         ),
                                       )))
@@ -186,9 +188,8 @@ class _NewVaccineViewState extends State<NewVaccineView> {
                             child: Observer(
                               builder: (_) => TextFormField(
                                 controller: _newVaccineController.controllerVet,
-                                style: TextStyle(
-                                    color: Color_Scheme.primaryColor
-                                ),
+                                style:
+                                    TextStyle(color: Color_Scheme.primaryColor),
                                 decoration: InputDecoration(
                                   labelText: "Veterinário Responsável",
                                   labelStyle: TextStyle(
@@ -213,13 +214,12 @@ class _NewVaccineViewState extends State<NewVaccineView> {
                                           controller: _newVaccineController
                                               .controllerCRM,
                                           style: TextStyle(
-                                              color: Color_Scheme.primaryColor
-                                          ),
+                                              color: Color_Scheme.primaryColor),
                                           decoration: InputDecoration(
                                             labelText: "CRMV",
                                             labelStyle: TextStyle(
                                                 color:
-                                                Color_Scheme.primaryColor),
+                                                    Color_Scheme.primaryColor),
                                             enabledBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: Color_Scheme
@@ -227,9 +227,12 @@ class _NewVaccineViewState extends State<NewVaccineView> {
                                             ),
                                           ),
                                           keyboardType: TextInputType.number,
-                                          validator: (value){
-                                            if(_newVaccineController.controllerVet.text.isNotEmpty){
-                                              if(value.isEmpty){
+                                          validator: (value) {
+                                            if (_newVaccineController
+                                                .controllerVet
+                                                .text
+                                                .isNotEmpty) {
+                                              if (value.isEmpty) {
                                                 return "CRMV do veterinário obrigatório.";
                                               }
                                             }
@@ -244,22 +247,24 @@ class _NewVaccineViewState extends State<NewVaccineView> {
                                           controller: _newVaccineController
                                               .controllerCRMUF,
                                           style: TextStyle(
-                                              color: Color_Scheme.primaryColor
-                                          ),
+                                              color: Color_Scheme.primaryColor),
                                           decoration: InputDecoration(
                                             labelText: "UF",
                                             labelStyle: TextStyle(
                                                 color:
-                                                Color_Scheme.primaryColor),
+                                                    Color_Scheme.primaryColor),
                                             enabledBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: Color_Scheme
                                                       .primaryColor),
                                             ),
                                           ),
-                                          validator: (value){
-                                            if(_newVaccineController.controllerVet.text.isNotEmpty){
-                                              if(value.isEmpty){
+                                          validator: (value) {
+                                            if (_newVaccineController
+                                                .controllerVet
+                                                .text
+                                                .isNotEmpty) {
+                                              if (value.isEmpty) {
                                                 return "UF do CRMV do veterinário obrigatório.";
                                               }
                                             }
@@ -294,6 +299,6 @@ class _NewVaccineViewState extends State<NewVaccineView> {
                       ],
                     ),
                   )),
-            )));
+        )));
   }
 }

@@ -3,6 +3,7 @@ import 'package:pets_manager/controllers/places/petplaces_controller.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
 import 'package:pets_manager/models/places/pet_places_model.dart';
 import 'package:pets_manager/models/pets/pets_model.dart';
+import 'package:pets_manager/models/user/user_model.dart';
 import 'package:pets_manager/views/pet/my_pet_forge_view.dart';
 import 'package:pets_manager/views/pet/pet_vaccine_view.dart';
 import 'package:pets_manager/views/places/list_petshops_view.dart';
@@ -12,8 +13,9 @@ class PetGeneralView extends StatelessWidget {
   final PetsModel petsModel;
   final Color_Scheme color_scheme;
   final bool darkMode;
+  final UserModel userModel;
 
-  PetGeneralView({this.petsModel, this.color_scheme, this.darkMode});
+  PetGeneralView({this.petsModel, this.color_scheme, this.darkMode, this.userModel});
 
   @override
   Widget build(BuildContext context) {
@@ -128,6 +130,7 @@ class PetGeneralView extends StatelessWidget {
                               builder: (context) => PetVaccinesView(
                                     petsModel: this.petsModel,
                                     color_scheme: this.color_scheme,
+                                    userModel: this.userModel,
                                   )));
                     },
                   ),

@@ -25,6 +25,36 @@ mixin _$NewVaccineController on _NewVaccineControllerStore, Store {
     });
   }
 
+  final _$userModelAtom = Atom(name: '_NewVaccineControllerStore.userModel');
+
+  @override
+  UserModel get userModel {
+    _$userModelAtom.reportRead();
+    return super.userModel;
+  }
+
+  @override
+  set userModel(UserModel value) {
+    _$userModelAtom.reportWrite(value, super.userModel, () {
+      super.userModel = value;
+    });
+  }
+
+  final _$petsModelsAtom = Atom(name: '_NewVaccineControllerStore.petsModels');
+
+  @override
+  PetsModel get petsModels {
+    _$petsModelsAtom.reportRead();
+    return super.petsModels;
+  }
+
+  @override
+  set petsModels(PetsModel value) {
+    _$petsModelsAtom.reportWrite(value, super.petsModels, () {
+      super.petsModels = value;
+    });
+  }
+
   final _$isLoadingAtom = Atom(name: '_NewVaccineControllerStore.isLoading');
 
   @override
@@ -180,11 +210,11 @@ mixin _$NewVaccineController on _NewVaccineControllerStore, Store {
       ActionController(name: '_NewVaccineControllerStore');
 
   @override
-  void saveVaccine() {
+  void saveVaccine({BuildContext context}) {
     final _$actionInfo = _$_NewVaccineControllerStoreActionController
         .startAction(name: '_NewVaccineControllerStore.saveVaccine');
     try {
-      return super.saveVaccine();
+      return super.saveVaccine(context: context);
     } finally {
       _$_NewVaccineControllerStoreActionController.endAction(_$actionInfo);
     }
@@ -194,6 +224,8 @@ mixin _$NewVaccineController on _NewVaccineControllerStore, Store {
   String toString() {
     return '''
 color_scheme: ${color_scheme},
+userModel: ${userModel},
+petsModels: ${petsModels},
 isLoading: ${isLoading},
 formKey: ${formKey},
 controllerDateApl: ${controllerDateApl},

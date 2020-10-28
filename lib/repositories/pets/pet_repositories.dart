@@ -36,11 +36,9 @@ class PetRepositories{
       }
       return result;
     } on FirebaseException catch (e) {
-      // e.g, e.code == 'canceled'
       result["error"] = "Tivemos um problema ao fazer o upload da imagem, por favor, tente novamente";
       return result;
     }
-
   }
 
   Future<List<PetsModel>> getListPets({String uid}) async{
@@ -53,8 +51,20 @@ class PetRepositories{
         .get();
 
     querySnapshot.docs.forEach((element) {
-      listPetsModel.add(PetsModel.fromJson(element.data()));
+      PetsModel petsModel = PetsModel.fromJson(element.data());
+      petsModel.idPet = element.id;
+      listPetsModel.add(petsModel);
     });
     return listPetsModel;
+  }
+
+  Future<void> updatePets({String uid, PetsModel petsModel}) async{
+    await this
+        .fire
+        .collection("users_data")
+        .doc(uid)
+        .collection("pets")
+        .doc(petsModel.idPet)
+        .set(petsModel.toJson());
   }
 }

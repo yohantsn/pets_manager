@@ -140,6 +140,7 @@ class _PetListViewState extends State<PetListView> {
                       petsModel: widget.homeController.listPetsModels[index],
                       color_scheme: widget.homeController.color_Scheme,
                       darkMode: widget.darkMode,
+                      userModel: widget.homeController.userModel,
                     )));
       },
     );

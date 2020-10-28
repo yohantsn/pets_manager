@@ -3,7 +3,10 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
+import 'package:pets_manager/models/pets/pets_model.dart';
 import 'package:pets_manager/models/pets/vaccine_model.dart';
+import 'package:pets_manager/models/user/user_model.dart';
+import 'package:pets_manager/repositories/pets/pet_repositories.dart';
 import 'package:pets_manager/repositories/pets/vaccine_repositorie.dart';
 
 part 'new_vaccine_controller.g.dart';
@@ -12,10 +15,16 @@ class NewVaccineController = _NewVaccineControllerStore
     with _$NewVaccineController;
 
 abstract class _NewVaccineControllerStore with Store {
-  _NewVaccineControllerStore({@required this.color_scheme});
+  _NewVaccineControllerStore({@required this.color_scheme, @required this.petsModels, @required this.userModel});
 
   @observable
   Color_Scheme color_scheme;
+
+  @observable
+  UserModel userModel;
+
+  @observable
+  PetsModel petsModels;
 
   @observable
   bool isLoading = false;
@@ -45,9 +54,11 @@ abstract class _NewVaccineControllerStore with Store {
   var controllerCRMUF = new TextEditingController();
 
   @action
-  void saveVaccine() {
+  void saveVaccine({BuildContext context}) {
     if (formKey.currentState.validate()) {
       this.isLoading = true;
+      List<VaccineModel> listVaccines = List<VaccineModel>();
+      listVaccines = this.petsModels.listVaccineModel;
       VaccineModel vaccineModel = VaccineModel(
           nameVaccine: this.controllerName.text.toString(),
           makerVaccine: this.controllerMaker.text.toString(),
@@ -56,9 +67,11 @@ abstract class _NewVaccineControllerStore with Store {
           nameVeterinary: this.controllerVet.text.toString(),
           numCrmVeterinary: this.controllerCRM.text.toString(),
           ufCrmVeterinary: this.controllerCRMUF.text.toString());
-      print(vaccineModel.toJson().toString());
-      VaccineRepositorie().addVaccine(vaccineModel).then((_) {
+      listVaccines.add(vaccineModel);
+      this.petsModels.listVaccineModel = listVaccines;
+      PetRepositories().updatePets(uid: this.userModel.uid, petsModel: this.petsModels).then((value){
         this.isLoading = false;
+        Navigator.pop(context);
       });
     }
   }

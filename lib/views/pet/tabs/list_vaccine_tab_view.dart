@@ -3,13 +3,15 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pets_manager/controllers/pet/list_vaccine_controller.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
 import 'package:pets_manager/models/pets/pets_model.dart';
+import 'package:pets_manager/models/user/user_model.dart';
 import 'package:pets_manager/views/pet/new_vaccine_view.dart';
 
 class ListVaccineTabView extends StatefulWidget {
   final PetsModel petsModel;
   final Color_Scheme color_scheme;
+  final UserModel userModel;
 
-  ListVaccineTabView({@required this.petsModel, this.color_scheme});
+  ListVaccineTabView({@required this.petsModel, this.color_scheme, this.userModel});
 
   @override
   _ListVaccineTabViewState createState() => _ListVaccineTabViewState();
@@ -21,7 +23,7 @@ class _ListVaccineTabViewState extends State<ListVaccineTabView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _listVaccineController = ListVaccineController(pets: widget.petsModel);
+    _listVaccineController = ListVaccineController(pets: widget.petsModel,);
   }
 
   @override
@@ -41,6 +43,7 @@ class _ListVaccineTabViewState extends State<ListVaccineTabView> {
                     builder: (context) => NewVaccineView(
                           petsModel: widget.petsModel,
                           color_scheme: widget.color_scheme,
+                          userModel: widget.userModel,
                         )));
           },
         ),
@@ -58,9 +61,11 @@ class _ListVaccineTabViewState extends State<ListVaccineTabView> {
                     ),
                     Expanded(child: Observer(
                       builder: (_) {
-                        return ListView.builder(
+                        return _listVaccineController.petsModel.listVaccineModel == null
+                        ? Container()
+                        : ListView.builder(
                           itemCount:
-                              _listVaccineController.listVaccineModel.length,
+                              _listVaccineController.petsModel.listVaccineModel.length,
                           itemBuilder: (context, index) {
                             return _listBuilder(context, index);
                           },
@@ -95,7 +100,7 @@ class _ListVaccineTabViewState extends State<ListVaccineTabView> {
                         Padding(
                           padding: EdgeInsets.all(5),
                           child: Text(
-                            "${_listVaccineController.listVaccineModel[index].nameVaccine}",
+                            "${_listVaccineController.petsModel.listVaccineModel[index].nameVaccine}",
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -105,7 +110,7 @@ class _ListVaccineTabViewState extends State<ListVaccineTabView> {
                         Padding(
                           padding: EdgeInsets.all(5),
                           child: Text(
-                            "${_listVaccineController.listVaccineModel[index].makerVaccine}",
+                            "${_listVaccineController.petsModel.listVaccineModel[index].makerVaccine}",
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -121,7 +126,7 @@ class _ListVaccineTabViewState extends State<ListVaccineTabView> {
                       Padding(
                         padding: EdgeInsets.all(5),
                         child: Text(
-                          "Aplicado em ${_listVaccineController.listVaccineModel[index].dateApplication}",
+                          "Aplicado em ${_listVaccineController.petsModel.listVaccineModel[index].dateApplication}",
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -131,7 +136,7 @@ class _ListVaccineTabViewState extends State<ListVaccineTabView> {
                       Padding(
                         padding: EdgeInsets.all(5),
                         child: Text(
-                          "Retorno em ${_listVaccineController.listVaccineModel[index].dateReturn}",
+                          "Retorno em ${_listVaccineController.petsModel.listVaccineModel[index].dateReturn}",
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -152,7 +157,7 @@ class _ListVaccineTabViewState extends State<ListVaccineTabView> {
                         Padding(
                           padding: EdgeInsets.fromLTRB(5, 10, 5, 5),
                           child: Text(
-                            "Aplicado por ${_listVaccineController.listVaccineModel[index].nameVeterinary}",
+                            "Aplicado por ${_listVaccineController.petsModel.listVaccineModel[index].nameVeterinary}",
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -162,7 +167,7 @@ class _ListVaccineTabViewState extends State<ListVaccineTabView> {
                         Padding(
                           padding: EdgeInsets.all(5),
                           child: Text(
-                            "CRMV: ${_listVaccineController.listVaccineModel[index].numCrmVeterinary}-${_listVaccineController.listVaccineModel[index].ufCrmVeterinary}",
+                            "CRMV: ${_listVaccineController.petsModel.listVaccineModel[index].numCrmVeterinary}-${_listVaccineController.petsModel.listVaccineModel[index].ufCrmVeterinary}",
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,

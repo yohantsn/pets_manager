@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
 import 'package:pets_manager/models/pets/pets_model.dart';
+import 'package:pets_manager/models/user/user_model.dart';
 import 'package:pets_manager/views/pet/tabs/case_vaccine_tab_view.dart';
 import 'package:pets_manager/views/pet/tabs/list_vaccine_tab_view.dart';
 
 class PetVaccinesView extends StatefulWidget {
   final PetsModel petsModel;
   final Color_Scheme color_scheme;
-  PetVaccinesView({@required this.petsModel, this.color_scheme});
+  final UserModel userModel;
+  PetVaccinesView({@required this.petsModel, this.color_scheme, this.userModel});
   @override
   _PetVaccinesViewState createState() => _PetVaccinesViewState();
 }
@@ -50,6 +52,7 @@ class _PetVaccinesViewState extends State<PetVaccinesView> {
               ListVaccineTabView(
                 color_scheme: widget.color_scheme,
                 petsModel: widget.petsModel,
+                userModel: widget.userModel,
               ),
             ],
           )),

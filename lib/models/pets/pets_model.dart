@@ -1,3 +1,5 @@
+import 'package:pets_manager/models/pets/vaccine_model.dart';
+
 class PetsModel {
   String idPet;
   String namePet;
@@ -8,6 +10,7 @@ class PetsModel {
   String photoPet;
   String sex; //M - Macho F - Femea
   String microchip;
+  List<VaccineModel> listVaccineModel;
 
   PetsModel(
       {this.idPet,
@@ -30,6 +33,12 @@ class PetsModel {
     photoPet = json['photoPet'];
     sex = json['sex'];
     microchip = json['microchip'];
+    if (json['listVaccineModel'] != null) {
+      listVaccineModel = new List<VaccineModel>();
+      json['listVaccineModel'].forEach((v) {
+        listVaccineModel.add(new VaccineModel.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -43,6 +52,9 @@ class PetsModel {
     data['photoPet'] = this.photoPet;
     data['sex'] = this.sex;
     data['microchip'] = this.microchip;
+    if (this.listVaccineModel != null) {
+      data['listVaccineModel'] = this.listVaccineModel.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }
