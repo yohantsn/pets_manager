@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:pets_manager/controllers/pet/list_vaccine_controller.dart';
 import 'package:pets_manager/controllers/pet/new_vaccine_controller.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
 import 'package:pets_manager/models/pets/pets_model.dart';
@@ -10,8 +11,9 @@ class NewVaccineView extends StatefulWidget {
   final PetsModel petsModel;
   final Color_Scheme color_scheme;
   final UserModel userModel;
+  final ListVaccineController listVaccineController;
 
-  NewVaccineView({this.color_scheme, this.petsModel, this.userModel});
+  NewVaccineView({this.color_scheme, this.petsModel, this.userModel, this.listVaccineController});
 
   @override
   _NewVaccineViewState createState() => _NewVaccineViewState();
@@ -27,7 +29,9 @@ class _NewVaccineViewState extends State<NewVaccineView> {
     _newVaccineController = NewVaccineController(
         color_scheme: widget.color_scheme,
         petsModels: widget.petsModel,
-        userModel: widget.userModel);
+        userModel: widget.userModel,
+        listVaccineController: widget.listVaccineController
+    );
   }
 
   @override
@@ -292,7 +296,7 @@ class _NewVaccineViewState extends State<NewVaccineView> {
                                   borderRadius: new BorderRadius.circular(25.0),
                                 ),
                                 onPressed: () {
-                                  _newVaccineController.saveVaccine();
+                                  _newVaccineController.saveVaccine(context: context);
                                 },
                               )),
                         ),

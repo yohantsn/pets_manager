@@ -44,6 +44,7 @@ class _ListVaccineTabViewState extends State<ListVaccineTabView> {
                           petsModel: widget.petsModel,
                           color_scheme: widget.color_scheme,
                           userModel: widget.userModel,
+                          listVaccineController: this._listVaccineController,
                         )));
           },
         ),

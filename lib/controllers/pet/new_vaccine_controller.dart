@@ -9,13 +9,22 @@ import 'package:pets_manager/models/user/user_model.dart';
 import 'package:pets_manager/repositories/pets/pet_repositories.dart';
 import 'package:pets_manager/repositories/pets/vaccine_repositorie.dart';
 
+import 'list_vaccine_controller.dart';
+
 part 'new_vaccine_controller.g.dart';
 
 class NewVaccineController = _NewVaccineControllerStore
     with _$NewVaccineController;
 
 abstract class _NewVaccineControllerStore with Store {
-  _NewVaccineControllerStore({@required this.color_scheme, @required this.petsModels, @required this.userModel});
+  _NewVaccineControllerStore(
+      {@required this.color_scheme,
+      @required this.petsModels,
+      @required this.userModel,
+      this.listVaccineController});
+
+  @observable
+  ListVaccineController listVaccineController;
 
   @observable
   Color_Scheme color_scheme;
@@ -58,7 +67,7 @@ abstract class _NewVaccineControllerStore with Store {
     if (formKey.currentState.validate()) {
       this.isLoading = true;
       List<VaccineModel> listVaccines = List<VaccineModel>();
-      listVaccines = this.petsModels.listVaccineModel;
+      listVaccines = this.petsModels.listVaccineModel ?? List<VaccineModel>();
       VaccineModel vaccineModel = VaccineModel(
           nameVaccine: this.controllerName.text.toString(),
           makerVaccine: this.controllerMaker.text.toString(),
@@ -69,7 +78,10 @@ abstract class _NewVaccineControllerStore with Store {
           ufCrmVeterinary: this.controllerCRMUF.text.toString());
       listVaccines.add(vaccineModel);
       this.petsModels.listVaccineModel = listVaccines;
-      PetRepositories().updatePets(uid: this.userModel.uid, petsModel: this.petsModels).then((value){
+      PetRepositories()
+          .updatePets(uid: this.userModel.uid, petsModel: this.petsModels)
+          .then((value) {
+        listVaccineController.getListVaccine();
         this.isLoading = false;
         Navigator.pop(context);
       });
