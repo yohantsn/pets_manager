@@ -9,6 +9,23 @@ part of 'new_vaccine_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$NewVaccineController on _NewVaccineControllerStore, Store {
+  final _$listVaccineControllerAtom =
+      Atom(name: '_NewVaccineControllerStore.listVaccineController');
+
+  @override
+  ListVaccineController get listVaccineController {
+    _$listVaccineControllerAtom.reportRead();
+    return super.listVaccineController;
+  }
+
+  @override
+  set listVaccineController(ListVaccineController value) {
+    _$listVaccineControllerAtom.reportWrite(value, super.listVaccineController,
+        () {
+      super.listVaccineController = value;
+    });
+  }
+
   final _$color_schemeAtom =
       Atom(name: '_NewVaccineControllerStore.color_scheme');
 
@@ -223,6 +240,7 @@ mixin _$NewVaccineController on _NewVaccineControllerStore, Store {
   @override
   String toString() {
     return '''
+listVaccineController: ${listVaccineController},
 color_scheme: ${color_scheme},
 userModel: ${userModel},
 petsModels: ${petsModels},

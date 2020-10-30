@@ -1,6 +1,7 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:pets_manager/controllers/home/home_controller.dart';
+import 'package:pets_manager/controllers/splash/splash_controller.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
 import 'package:pets_manager/models/user/user_model.dart';
 import 'package:pets_manager/views/pet/list_pet_view.dart';
@@ -10,7 +11,8 @@ import 'package:pets_manager/views/tabs_home/tab_perfil_view.dart';
 class HomeView extends StatefulWidget {
 
   final UserModel userModel;
-  HomeView({this.userModel});
+  final SplashController splashController;
+  HomeView({this.userModel, this.splashController});
 
   @override
   _HomeViewState createState() => _HomeViewState();
@@ -20,11 +22,12 @@ class _HomeViewState extends State<HomeView> {
   int _currentIndex = 1;
   HomeController _homeController;
 
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _homeController = HomeController(userModel: widget.userModel);
+    _homeController = HomeController(userModel: widget.userModel ?? widget.splashController.userModel);
   }
 
   @override
