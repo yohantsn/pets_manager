@@ -11,6 +11,7 @@ class PetsModel {
   String sex; //M - Macho F - Femea
   String microchip;
   List<VaccineModel> listVaccineModel;
+  bool isForget;
 
   PetsModel(
       {this.idPet,
@@ -21,7 +22,8 @@ class PetsModel {
         this.dateNascPet,
         this.photoPet,
         this.sex,
-        this.microchip});
+        this.microchip,
+      this.isForget});
 
   PetsModel.fromJson(Map<String, dynamic> json) {
     idPet = json['idPet'];
@@ -33,6 +35,7 @@ class PetsModel {
     photoPet = json['photoPet'];
     sex = json['sex'];
     microchip = json['microchip'];
+    isForget = json['isForget'];
     if (json['listVaccineModel'] != null) {
       listVaccineModel = new List<VaccineModel>();
       json['listVaccineModel'].forEach((v) {
@@ -52,6 +55,7 @@ class PetsModel {
     data['photoPet'] = this.photoPet;
     data['sex'] = this.sex;
     data['microchip'] = this.microchip;
+    data['isForget'] = this.isForget;
     if (this.listVaccineModel != null) {
       data['listVaccineModel'] = this.listVaccineModel.map((v) => v.toJson()).toList();
     }

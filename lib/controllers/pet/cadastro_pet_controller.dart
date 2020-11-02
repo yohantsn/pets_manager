@@ -143,7 +143,8 @@ abstract class _CadastroPetController extends PetRepositories with Store {
           dateNascPet: controllerDateNasc.text,
           photoPet: mapUpdate["urlPic"],
           microchip: controllerMicroChip.text,
-          sex: sexSelec);
+          sex: sexSelec,
+          isForget: false);
       await savePetCloud(uid: this.userModel.uid, petsModel: petsModel);
       this.isLoading = false;
       Navigator.push(
