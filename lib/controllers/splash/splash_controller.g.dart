@@ -24,21 +24,6 @@ mixin _$SplashController on _SplashControllerController, Store {
     });
   }
 
-  final _$userModelAtom = Atom(name: '_SplashControllerController.userModel');
-
-  @override
-  UserModel get userModel {
-    _$userModelAtom.reportRead();
-    return super.userModel;
-  }
-
-  @override
-  set userModel(UserModel value) {
-    _$userModelAtom.reportWrite(value, super.userModel, () {
-      super.userModel = value;
-    });
-  }
-
   final _$uidAtom = Atom(name: '_SplashControllerController.uid');
 
   @override
@@ -81,7 +66,6 @@ mixin _$SplashController on _SplashControllerController, Store {
   String toString() {
     return '''
 isLoading: ${isLoading},
-userModel: ${userModel},
 uid: ${uid},
 seconds: ${seconds}
     ''';

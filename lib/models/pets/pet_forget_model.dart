@@ -4,6 +4,7 @@ class PetForgetModel {
   PetsModel petsModel;
   double lat;
   double lon;
+  String uid;
   String mensagem;
 
   PetForgetModel({this.petsModel, this.lat, this.lon, this.mensagem});
@@ -14,6 +15,7 @@ class PetForgetModel {
         : null;
     lat = json['lat'];
     lon = json['lon'];
+    uid = json['uid'];
     mensagem = json['mensagem'];
   }
 
@@ -25,6 +27,7 @@ class PetForgetModel {
     data['lat'] = this.lat;
     data['lon'] = this.lon;
     data['mensagem'] = this.mensagem;
+    data['uid'] = this.uid;
     return data;
   }
 }

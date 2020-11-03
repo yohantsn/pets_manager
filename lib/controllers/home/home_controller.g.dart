@@ -84,6 +84,14 @@ mixin _$HomeController on HomeControllerStore, Store {
     return _$getListPetAsyncAction.run(() => super.getListPet());
   }
 
+  final _$getUserDataAsyncAction =
+      AsyncAction('HomeControllerStore.getUserData');
+
+  @override
+  Future<void> getUserData() {
+    return _$getUserDataAsyncAction.run(() => super.getUserData());
+  }
+
   @override
   String toString() {
     return '''

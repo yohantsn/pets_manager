@@ -1,6 +1,7 @@
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pets_manager/core/colors_scheme.dart';
+import 'package:pets_manager/core/firebase/auth/auth_core.dart';
 import 'package:pets_manager/models/pets/pets_model.dart';
 import 'package:pets_manager/models/user/user_model.dart';
 import 'package:pets_manager/repositories/pets/pet_repositories.dart';
@@ -11,9 +12,10 @@ part 'home_controller.g.dart';
 class HomeController = HomeControllerStore
     with _$HomeController;
 
-abstract class HomeControllerStore with Store{
-  HomeControllerStore({this.userModel}){
-    color_Scheme = Color_Scheme(userModel: this.userModel);
+abstract class HomeControllerStore extends UserRepositories with Store{
+  HomeControllerStore({this.userModel}) {
+    getUserData();
+
   }
 
   @observable
@@ -44,4 +46,16 @@ abstract class HomeControllerStore with Store{
    this.listPetsModels = await PetRepositories().getListPets(uid: this.userModel.uid);
    this.isLoading = false;
   }
+
+  @action
+  Future<void> getUserData() async {
+    this.isLoading =  true;
+    if(this.userModel == null) {
+      String uid = AuthCore().getUid();
+      this.userModel = await getUserModel(uid: uid);
+    }
+    color_Scheme = Color_Scheme(userModel: this.userModel);
+    this.isLoading = false;
+  }
+
 }
