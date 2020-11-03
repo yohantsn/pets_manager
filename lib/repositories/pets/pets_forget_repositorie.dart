@@ -1,4 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pets_manager/models/pets/pet_forget_model.dart';
+import 'package:pets_manager/models/pets/pets_model.dart';
+
 class PetsForgetRepositorie{
+  PetsForgetRepositorie(){
+    this.fire = FirebaseFirestore.instance;
+}
+  FirebaseFirestore fire;
+  QuerySnapshot querySnapshot;
   static Future<List<Map<String,dynamic>>> getListPetsForgetRepositorie() async{
     List<Map<String,dynamic>> _list = [
       {
@@ -55,5 +64,12 @@ class PetsForgetRepositorie{
   static Future<Map<String,dynamic>> getPetForgetByIdRepositorie(String id, String uid) async {
     Map<String, dynamic> _map;
     return _map;
+  }
+
+  Future<void> createPetForget({PetForgetModel petForgetModel, String uid}) async{
+    await this
+        .fire
+        .collection("pets_forgets")
+        .add(petForgetModel.toJson());
   }
 }
