@@ -1,33 +1,29 @@
-import 'package:pets_manager/models/pets/pets_model.dart';
+
 
 class PetForgetModel {
-  PetsModel petsModel;
   double lat;
   double lon;
   String uid;
   String mensagem;
+  String idPet;
 
-  PetForgetModel({this.petsModel, this.lat, this.lon, this.mensagem});
+  PetForgetModel({ this.lat, this.lon, this.mensagem, this.uid, this.idPet});
 
   PetForgetModel.fromJson(Map<String, dynamic> json) {
-    petsModel = json['petDetail'] != null
-        ? new PetsModel.fromJson(json['petDetail'])
-        : null;
     lat = json['lat'];
     lon = json['lon'];
     uid = json['uid'];
+    idPet = json['idPet'];
     mensagem = json['mensagem'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.petsModel != null) {
-      data['petDetail'] = this.petsModel.toJson();
-    }
     data['lat'] = this.lat;
     data['lon'] = this.lon;
     data['mensagem'] = this.mensagem;
     data['uid'] = this.uid;
+    data['idPet'] = this.idPet;
     return data;
   }
 }

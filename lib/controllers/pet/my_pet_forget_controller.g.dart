@@ -25,6 +25,22 @@ mixin _$MyPetForgetController on MyPetForgetControllerStore, Store {
     });
   }
 
+  final _$mapboxMapControllerAtom =
+      Atom(name: 'MyPetForgetControllerStore.mapboxMapController');
+
+  @override
+  MapboxMapController get mapboxMapController {
+    _$mapboxMapControllerAtom.reportRead();
+    return super.mapboxMapController;
+  }
+
+  @override
+  set mapboxMapController(MapboxMapController value) {
+    _$mapboxMapControllerAtom.reportWrite(value, super.mapboxMapController, () {
+      super.mapboxMapController = value;
+    });
+  }
+
   final _$latLngClickAtom =
       Atom(name: 'MyPetForgetControllerStore.latLngClick');
 
@@ -38,6 +54,22 @@ mixin _$MyPetForgetController on MyPetForgetControllerStore, Store {
   set latLngClick(LatLng value) {
     _$latLngClickAtom.reportWrite(value, super.latLngClick, () {
       super.latLngClick = value;
+    });
+  }
+
+  final _$txtControllerAtom =
+      Atom(name: 'MyPetForgetControllerStore.txtController');
+
+  @override
+  TextEditingController get txtController {
+    _$txtControllerAtom.reportRead();
+    return super.txtController;
+  }
+
+  @override
+  set txtController(TextEditingController value) {
+    _$txtControllerAtom.reportWrite(value, super.txtController, () {
+      super.txtController = value;
     });
   }
 
@@ -118,6 +150,28 @@ mixin _$MyPetForgetController on MyPetForgetControllerStore, Store {
   }
 
   @override
+  void onStyleLoaded() {
+    final _$actionInfo = _$MyPetForgetControllerStoreActionController
+        .startAction(name: 'MyPetForgetControllerStore.onStyleLoaded');
+    try {
+      return super.onStyleLoaded();
+    } finally {
+      _$MyPetForgetControllerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void onMapCreated(MapboxMapController controller) {
+    final _$actionInfo = _$MyPetForgetControllerStoreActionController
+        .startAction(name: 'MyPetForgetControllerStore.onMapCreated');
+    try {
+      return super.onMapCreated(controller);
+    } finally {
+      _$MyPetForgetControllerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void getAddressClick(LatLng latLng) {
     final _$actionInfo = _$MyPetForgetControllerStoreActionController
         .startAction(name: 'MyPetForgetControllerStore.getAddressClick');
@@ -129,11 +183,11 @@ mixin _$MyPetForgetController on MyPetForgetControllerStore, Store {
   }
 
   @override
-  void savePetForget(PetsModel petsModel, String message) {
+  void savePetForget(PetsModel petsModel, BuildContext context) {
     final _$actionInfo = _$MyPetForgetControllerStoreActionController
         .startAction(name: 'MyPetForgetControllerStore.savePetForget');
     try {
-      return super.savePetForget(petsModel, message);
+      return super.savePetForget(petsModel, context);
     } finally {
       _$MyPetForgetControllerStoreActionController.endAction(_$actionInfo);
     }
@@ -143,7 +197,9 @@ mixin _$MyPetForgetController on MyPetForgetControllerStore, Store {
   String toString() {
     return '''
 addressClick: ${addressClick},
+mapboxMapController: ${mapboxMapController},
 latLngClick: ${latLngClick},
+txtController: ${txtController},
 petForgetModel: ${petForgetModel},
 isLoading: ${isLoading},
 isSucess: ${isSucess},

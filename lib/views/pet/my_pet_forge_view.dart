@@ -19,22 +19,6 @@ class MyPetForgetView extends StatefulWidget {
 
 class _MyPetForgetViewState extends State<MyPetForgetView> {
   MyPetForgetController _myPetController = MyPetForgetController();
-  MapboxMapController mapboxMapController;
-  TextEditingController txtController = TextEditingController();
-
-  void _onMapCreated(MapboxMapController controller) {
-    this.mapboxMapController = controller;
-  }
-
-  void _onStyleLoaded() {
-    mapboxMapController.addSymbol(
-      SymbolOptions(
-        geometry: _myPetController.latLngClick,
-        iconImage: "assets/images/location_pin.png",
-        //iconSize: 5.0
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +30,7 @@ class _MyPetForgetViewState extends State<MyPetForgetView> {
             style: TextStyle(color: Colors.white),
           ),
           centerTitle: true,
-          iconTheme: IconThemeData(
-              color: Color_Scheme.secondaryLigthColor
-          ),
+          iconTheme: IconThemeData(color: Color_Scheme.secondaryLigthColor),
         ),
         backgroundColor: widget.color_scheme.themeColor,
         body: SafeArea(
@@ -75,23 +57,27 @@ class _MyPetForgetViewState extends State<MyPetForgetView> {
                             ),
                           ),
                           Container(
-                            padding: EdgeInsets.all(10),
-                            alignment: Alignment.center,
-                            height: MediaQuery.of(context).size.height * 0.60,
-                            width: MediaQuery.of(context).size.width,
-                            child: MapboxMap(
-                              onMapCreated: _onMapCreated,
-                              onStyleLoadedCallback: _onStyleLoaded,
-                              styleString: widget.darkMode ? MapboxStyles.DARK :MapboxStyles.LIGHT,
-                              accessToken: CommonsValues().mapToken,
-                              initialCameraPosition: CameraPosition(
-                                  target: _myPetController.latLngClick,
-                                  zoom: 14.0),
-                              onMapClick: (valueDouble, latLng) {
-                                _myPetController.getAddressClick(latLng);
-                              },
-                            ),
-                          ),
+                              padding: EdgeInsets.all(10),
+                              alignment: Alignment.center,
+                              height: MediaQuery.of(context).size.height * 0.60,
+                              width: MediaQuery.of(context).size.width,
+                              child: Observer(
+                                builder: (_) => MapboxMap(
+                                  onMapCreated: _myPetController.onMapCreated,
+                                  onStyleLoadedCallback:
+                                      _myPetController.onStyleLoaded,
+                                  styleString: widget.darkMode
+                                      ? MapboxStyles.DARK
+                                      : MapboxStyles.LIGHT,
+                                  accessToken: CommonsValues().mapToken,
+                                  initialCameraPosition: CameraPosition(
+                                      target: _myPetController.latLngClick,
+                                      zoom: 14.0),
+                                  onMapClick: (valueDouble, latLng) {
+                                    _myPetController.getAddressClick(latLng);
+                                  },
+                                ),
+                              )),
                           Padding(
                               padding: EdgeInsets.all(10),
                               child: Observer(
@@ -110,6 +96,8 @@ class _MyPetForgetViewState extends State<MyPetForgetView> {
                                 child: Padding(
                                     padding: EdgeInsets.all(10),
                                     child: TextField(
+                                      controller:
+                                          _myPetController.txtController,
                                       decoration: InputDecoration(
                                         hintText:
                                             "Mensagem para os outros tutores",
@@ -138,8 +126,7 @@ class _MyPetForgetViewState extends State<MyPetForgetView> {
                                   ),
                                   onPressed: () {
                                     _myPetController.savePetForget(
-                                        widget.petsModel,
-                                        txtController.text ?? "");
+                                        widget.petsModel, context);
                                   },
                                 )),
                           ),

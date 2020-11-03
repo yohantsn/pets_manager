@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pets_manager/models/pets/pet_forget_model.dart';
-import 'package:pets_manager/models/pets/pets_model.dart';
+
 
 class PetsForgetRepositorie{
   PetsForgetRepositorie(){
@@ -66,7 +66,7 @@ class PetsForgetRepositorie{
     return _map;
   }
 
-  Future<void> createPetForget({PetForgetModel petForgetModel, String uid}) async{
+  Future<void> createPetForget({PetForgetModel petForgetModel}) async{
     await this
         .fire
         .collection("pets_forgets")
