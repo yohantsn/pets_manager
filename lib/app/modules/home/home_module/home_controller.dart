@@ -1,10 +1,11 @@
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pets_manager/app/models/pets/pets_model.dart';
 import 'package:pets_manager/app/models/user/user_model.dart';
 import 'package:pets_manager/app/shared/core/colors_scheme.dart';
 import 'package:pets_manager/app/shared/core/firebase/auth/auth_core.dart';
-import 'package:pets_manager/app/shared/repositories/pets/pet_repositories.dart';
+import 'package:pets_manager/app/shared/repositories/pets/pet/pet_interface_repositorie.dart';
 import 'package:pets_manager/app/shared/repositories/user/user_repositories.dart';
 
 
@@ -14,9 +15,9 @@ class HomeController = _HomeController
     with _$HomeController;
 
 abstract class _HomeController extends UserRepositories with Store{
+  final IPetRepositorie petRepositorie = Modular.get();
   _HomeController({this.userModel}) {
     getUserData();
-
   }
 
   @observable
@@ -43,7 +44,7 @@ abstract class _HomeController extends UserRepositories with Store{
   @action
   Future<void> getListPet() async{
    this.isLoading = true;
-   this.listPetsModels = await PetRepositories().getListPets(uid: this.userModel.uid);
+   this.listPetsModels = await petRepositorie.getListPets(uid: this.userModel.uid);
    this.isLoading = false;
   }
 

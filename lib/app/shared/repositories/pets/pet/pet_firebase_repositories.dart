@@ -3,10 +3,11 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:pets_manager/app/models/pets/pets_model.dart';
+import 'package:pets_manager/app/shared/repositories/pets/pet/pet_interface_repositorie.dart';
 
 
-class PetRepositories{
-  PetRepositories(){
+class PetFirebaseRepositories implements IPetRepositorie{
+  PetFirebaseRepositories(){
     this.fire = FirebaseFirestore.instance;
     storage = firebase_storage.FirebaseStorage.instance;
   }
@@ -15,6 +16,7 @@ class PetRepositories{
   QuerySnapshot querySnapshot;
   firebase_storage.FirebaseStorage storage;
 
+  @override
   Future<void> savePetCloud({String uid, PetsModel petsModel}) async{
     await this
         .fire
@@ -24,7 +26,9 @@ class PetRepositories{
         .add(petsModel.toJson());
   }
 
-  Future<Map<String, dynamic>> uploadImagePet(String uid, File imgFile) async{
+  @override
+  Future<Map<String, dynamic>> uploadImagePet(
+      {String uid, File imgFile}) async{
     Map<String, dynamic> result = Map<String, dynamic>();
 
       String nameImage = DateTime.now().toUtc().millisecondsSinceEpoch.toString();
@@ -42,6 +46,7 @@ class PetRepositories{
     }
   }
 
+  @override
   Future<List<PetsModel>> getListPets({String uid}) async{
     List<PetsModel> listPetsModel = List<PetsModel>();
     querySnapshot = await this
@@ -59,6 +64,7 @@ class PetRepositories{
     return listPetsModel;
   }
 
+  @override
   Future<void> updatePets({String uid, PetsModel petsModel}) async{
     await this
         .fire

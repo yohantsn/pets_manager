@@ -2,22 +2,24 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pets_manager/app/models/pets/pets_model.dart';
 import 'package:pets_manager/app/models/user/user_model.dart';
-import 'package:pets_manager/app/modules/home/home_module/home_view.dart';
 import 'package:pets_manager/app/shared/core/colors_scheme.dart';
 import 'package:pets_manager/app/shared/repositories/general/list_especies.dart';
 import 'package:pets_manager/app/shared/repositories/general/list_sex.dart';
-import 'package:pets_manager/app/shared/repositories/pets/pet_repositories.dart';
+import 'package:pets_manager/app/shared/repositories/pets/pet/pet_interface_repositorie.dart';
+
 
 part 'cadastro_pet_controller.g.dart';
 
 class CadastroPetController = _CadastroPetController
     with _$CadastroPetController;
 
-abstract class _CadastroPetController extends PetRepositories with Store {
+abstract class _CadastroPetController with Store {
+  final IPetRepositorie petRepositorie = Modular.get();
   _CadastroPetController({this.userModel}) {
     especieSelec = listEspecies.first;
     sexSelec = listSex.first;
@@ -129,7 +131,7 @@ abstract class _CadastroPetController extends PetRepositories with Store {
         this.isLoading = false;
         showDialog(context);
       } else if (this.file != null) {
-        mapUpdate = await uploadImagePet(this.userModel.uid, this.file);
+        mapUpdate = await petRepositorie.uploadImagePet(uid: this.userModel.uid, imgFile: this.file);
       }
       if (mapUpdate == null || mapUpdate.containsKey("error")) {
         callSnackbar(mapUpdate["error"] ?? "Erro");
@@ -145,14 +147,9 @@ abstract class _CadastroPetController extends PetRepositories with Store {
           microchip: controllerMicroChip.text,
           sex: sexSelec,
           isForget: false);
-      await savePetCloud(uid: this.userModel.uid, petsModel: petsModel);
+      await petRepositorie.savePetCloud(uid: this.userModel.uid, petsModel: petsModel);
       this.isLoading = false;
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => HomeView(
-                    userModel: userModel,
-                  )));
+      Modular.to.pushNamed("/home/", arguments: {"userModel" : userModel});
     }
   }
 

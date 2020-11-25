@@ -17,6 +17,6 @@ class SplashView extends StatelessWidget {
 
         navigateAfterSeconds: _splashController.uid.isEmpty
             ? ApresentacaoScreen()
-            : HomeView(userModel: null),);
+            : HomeView(),);
   }
 }

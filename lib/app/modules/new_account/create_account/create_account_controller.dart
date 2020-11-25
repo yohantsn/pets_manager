@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:location/location.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pets_manager/app/models/user/user_model.dart';
 import 'package:pets_manager/app/modules/pet/cadastro_pet/cadastro_pet_view.dart';
 import 'package:pets_manager/app/shared/core/firebase/auth/auth_core.dart';
-import 'package:pets_manager/app/shared/core/location_manager.dart';
+import 'package:pets_manager/app/shared/location/location_interface_data.dart';
 import 'package:pets_manager/app/shared/repositories/user/user_repositories.dart';
 
 
@@ -15,6 +16,8 @@ class CreateAccountController = _CreateAccountController
     with _$CreateAccountController;
 
 abstract class _CreateAccountController with Store {
+  final ILocationData geoData = Modular.get();
+
   @observable
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -52,7 +55,7 @@ abstract class _CreateAccountController with Store {
       UserModel userModel = await AuthCore().authCreateAccountEmail(
           email: controllerEmail.text, password: controllerPassword.text);
       if (userModel.errorMsg == null || userModel.errorMsg.isEmpty) {
-        LocationData locationData = await LocationManager().getLocation();
+        LocationData locationData = await geoData.getLocation();
         userModel.ownerName = controllerName.text;
         userModel.ownerEmail = controllerEmail.text;
         userModel.ownerPhone = controller.text;

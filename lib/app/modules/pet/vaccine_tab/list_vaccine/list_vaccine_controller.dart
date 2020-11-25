@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pets_manager/app/models/pets/pets_model.dart';
 import 'package:pets_manager/app/models/pets/vaccine_model.dart';
-import 'package:pets_manager/app/shared/repositories/pets/vaccine_repositorie.dart';
+import 'package:pets_manager/app/shared/repositories/pets/vaccine/vaccine_repositorie.dart';
 part 'list_vaccine_controller.g.dart';
 
 class ListVaccineController = _ListVaccineControllerStore

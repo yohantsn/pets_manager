@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pets_manager/app/models/user/user_model.dart';
 import 'package:pets_manager/app/modules/home/home_module/home_view.dart';
@@ -24,7 +25,7 @@ abstract class _LoginControllerStore extends AuthCore with Store {
   var controllerPassword = new TextEditingController();
 
   @action
-  void signIn({BuildContext context}) {
+  void signIn() {
     if (formKey.currentState.validate()) {
       String password = controllerPassword.text;
       String email = controllerEmail.text;
@@ -34,12 +35,7 @@ abstract class _LoginControllerStore extends AuthCore with Store {
       authSignAccountEmail(email: email, password: password)
           .then((value) {
         if (value.errorMsg.isEmpty) {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => HomeView(
-                        userModel: value
-                      )));
+          Modular.to.pushNamed("/home/", arguments: {"userModel" : userModel});
         } else {
           callSnackbar(value.errorMsg);
         }

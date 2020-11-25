@@ -1,12 +1,12 @@
 
-import 'dart:ffi';
 
 import 'package:geocoder/geocoder.dart';
-import 'package:latlong/latlong.dart';
 import 'package:location/location.dart';
+import 'package:pets_manager/app/shared/location/location_interface_data.dart';
 
-class LocationManager{
+class LocationGeoData implements ILocationData{
 
+  @override
   Future<LocationData> getLocation() async {
     Location location = new Location();
 
@@ -34,7 +34,8 @@ class LocationManager{
     return _locationData;
   }
 
-  Future<String> getAddress(double lat, double lon) async {
+  @override
+  Future<String> getAddress({double lat, double lon}) async {
     await  Geocoder.local.findAddressesFromCoordinates(Coordinates(lat, lon)).then((value){
         print(value.first.addressLine);
         return value.first.addressLine.toString();

@@ -1,19 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geocoder/model.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:mobx/mobx.dart';
-
 import 'package:pets_manager/app/models/pets/pet_forget_model.dart';
 import 'package:pets_manager/app/models/pets/pets_model.dart';
 import 'package:pets_manager/app/modules/home/home_module/home_view.dart';
 import 'package:pets_manager/app/shared/core/firebase/auth/auth_core.dart';
-import 'package:pets_manager/app/shared/core/location_manager.dart';
-import 'package:pets_manager/app/shared/repositories/pets/pet_repositories.dart';
-import 'package:pets_manager/app/shared/repositories/pets/pets_forget_repositorie.dart';
-
-
+import 'package:pets_manager/app/shared/location/location_interface_data.dart';
+import 'package:pets_manager/app/shared/repositories/pets/pet/pet_interface_repositorie.dart';
+import 'package:pets_manager/app/shared/repositories/pets/pet_forget/pets_forget_interface.dart';
 
 part 'my_pet_forget_controller.g.dart';
 
@@ -21,6 +19,10 @@ class MyPetForgetController = _MyPetForgetController
     with _$MyPetForgetController;
 
 abstract class _MyPetForgetController with Store {
+  final ILocationData geoData = Modular.get();
+  final IPetForget petForget = Modular.get();
+  final IPetRepositorie petRepositorie = Modular.get();
+
   _MyPetForgetController() {
     getMyLocation();
   }
@@ -51,7 +53,7 @@ abstract class _MyPetForgetController with Store {
 
   @action
   void getMyLocation() {
-    LocationManager().getLocation().then((value) {
+    geoData.getLocation().then((value) {
       this.latLngClick = LatLng(value.latitude, value.longitude);
       getAddressClick(latLngClick);
     });
@@ -60,11 +62,11 @@ abstract class _MyPetForgetController with Store {
   @action
   void onStyleLoaded() {
     this.mapboxMapController.addSymbol(
-      SymbolOptions(
-        geometry: this.latLngClick,
-        iconImage: "assets/images/location_pin.png",
-      ),
-    );
+          SymbolOptions(
+            geometry: this.latLngClick,
+            iconImage: "assets/images/location_pin.png",
+          ),
+        );
   }
 
   @action
@@ -96,15 +98,16 @@ abstract class _MyPetForgetController with Store {
         idPet: petsModel.idPet,
         dateLost: DateTime.now().toUtc().toLocal(),
         mensagem: this.txtController.text ?? "");
-    PetsForgetRepositorie().createPetForget(petForgetModel: petForgetModel).then((value) {
-      PetRepositories().updatePets(uid: uid, petsModel: petsModel);
+    petForget.createPetForget(petForgetModel: petForgetModel).then((value) {
+      petRepositorie.updatePets(uid: uid, petsModel: petsModel);
       this.isLoading = false;
       this.isSucess = true;
     });
   }
 
   @action
-  void goToHome({BuildContext context}){
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeView()));
+  void goToHome({BuildContext context}) {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => HomeView()));
   }
 }

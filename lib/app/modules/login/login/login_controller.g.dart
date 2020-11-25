@@ -75,11 +75,11 @@ mixin _$LoginController on _LoginControllerStore, Store {
       ActionController(name: '_LoginControllerStore');
 
   @override
-  void signIn({BuildContext context}) {
+  void signIn() {
     final _$actionInfo = _$_LoginControllerStoreActionController.startAction(
         name: '_LoginControllerStore.signIn');
     try {
-      return super.signIn(context: context);
+      return super.signIn();
     } finally {
       _$_LoginControllerStoreActionController.endAction(_$actionInfo);
     }

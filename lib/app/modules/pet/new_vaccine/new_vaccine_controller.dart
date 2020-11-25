@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pets_manager/app/models/pets/pets_model.dart';
 import 'package:pets_manager/app/models/pets/vaccine_model.dart';
 import 'package:pets_manager/app/models/user/user_model.dart';
 import 'package:pets_manager/app/shared/core/colors_scheme.dart';
-import 'package:pets_manager/app/shared/repositories/pets/pet_repositories.dart';
+import 'package:pets_manager/app/shared/repositories/pets/pet/pet_interface_repositorie.dart';
+
 
 import '../vaccine_tab/list_vaccine/list_vaccine_controller.dart';
 
@@ -15,6 +17,7 @@ class NewVaccineController = _NewVaccineControllerStore
     with _$NewVaccineController;
 
 abstract class _NewVaccineControllerStore with Store {
+  final IPetRepositorie petRepositorie = Modular.get();
   _NewVaccineControllerStore(
       {@required this.color_scheme,
       @required this.petsModels,
@@ -76,7 +79,7 @@ abstract class _NewVaccineControllerStore with Store {
           ufCrmVeterinary: this.controllerCRMUF.text.toString());
       listVaccines.add(vaccineModel);
       this.petsModels.listVaccineModel = listVaccines;
-      PetRepositories()
+      petRepositorie
           .updatePets(uid: this.userModel.uid, petsModel: this.petsModels)
           .then((value) {
         listVaccineController.getListVaccine();

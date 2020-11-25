@@ -4,7 +4,7 @@ import 'package:pets_manager/app/modules/login/login/login_controller.dart';
 import 'package:pets_manager/app/shared/core/colors_scheme.dart';
 
 
-class LoginScreen extends StatelessWidget {
+class LoginView extends StatelessWidget {
   LoginController loginController = LoginController();
   @override
   Widget build(BuildContext context) {
@@ -90,7 +90,7 @@ class LoginScreen extends StatelessWidget {
                           borderRadius: new BorderRadius.circular(25.0),
                         ),
                         onPressed: (){
-                          loginController.signIn(context: context);
+                          loginController.signIn();
                         },
                       )
                   ),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:pets_manager/app/shared/core/colors_scheme.dart';
 import '../../new_account/create_account/create_account_view.dart';
 import '../login/login_view.dart';
@@ -47,7 +48,7 @@ class ApresentacaoScreen extends StatelessWidget {
                         borderRadius: new BorderRadius.circular(25.0),
                       ),
                       onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                        Modular.to.pushNamed("/login/");
                       },
                     )
                 ),
