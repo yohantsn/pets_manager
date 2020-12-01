@@ -9,6 +9,7 @@ import 'package:pets_manager/app/models/pets/pet_forget_model.dart';
 import 'package:pets_manager/app/models/pets/pets_model.dart';
 import 'package:pets_manager/app/modules/home/home_module/home_view.dart';
 import 'package:pets_manager/app/shared/core/firebase/auth/auth_core.dart';
+import 'package:pets_manager/app/shared/core/firebase/auth/auth_interface.dart';
 import 'package:pets_manager/app/shared/location/location_interface_data.dart';
 import 'package:pets_manager/app/shared/repositories/pets/pet/pet_interface_repositorie.dart';
 import 'package:pets_manager/app/shared/repositories/pets/pet_forget/pets_forget_interface.dart';
@@ -22,6 +23,7 @@ abstract class _MyPetForgetController with Store {
   final ILocationData geoData = Modular.get();
   final IPetForget petForget = Modular.get();
   final IPetRepositorie petRepositorie = Modular.get();
+  final IAuth authFirebase = Modular.get();
 
   _MyPetForgetController() {
     getMyLocation();
@@ -89,7 +91,7 @@ abstract class _MyPetForgetController with Store {
   @action
   void savePetForget(PetsModel petsModel, BuildContext context) {
     this.isLoading = true;
-    String uid = AuthCore().getUid();
+    String uid = authFirebase.getUid();
     petsModel.isForget = true;
     PetForgetModel petForgetModel = PetForgetModel(
         lat: this.latLngClick.latitude,

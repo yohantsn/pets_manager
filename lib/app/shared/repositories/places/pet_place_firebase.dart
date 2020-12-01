@@ -1,5 +1,9 @@
-class ListPetRepositorie{
-  static Future<List<Map<String,dynamic>>> getListPetPlaces() async {
+import 'package:pets_manager/app/shared/repositories/places/pet_place_interface.dart';
+
+class PetPlaceFirebase implements IPetPlace{
+
+  @override
+  Future<List<Map<String,dynamic>>> getListPetPlaces() async {
     List<Map<String,dynamic>> _list = [
       {
         "name": "Estimacão",

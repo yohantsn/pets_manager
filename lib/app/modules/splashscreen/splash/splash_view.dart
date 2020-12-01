@@ -1,22 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:pets_manager/app/modules/login/apresentacao/apresentacao_view.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:pets_manager/app/modules/splashscreen/splash/splash_controller.dart';
 import 'package:pets_manager/app/shared/core/colors_scheme.dart';
-import 'package:splashscreen/splashscreen.dart';
 
-import '../../home/home_module/home_view.dart';
+class SplashView extends StatefulWidget {
+  @override
+  _SplashViewState createState() => _SplashViewState();
+}
 
-class SplashView extends StatelessWidget {
-  SplashController _splashController = SplashController();
+class _SplashViewState extends ModularState<SplashView, SplashController> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SystemChrome.setEnabledSystemUIOverlays([]);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SplashScreen(
-        backgroundColor: Color_Scheme.primaryColor,
-        seconds: _splashController.seconds,
-
-        navigateAfterSeconds: _splashController.uid.isEmpty
-            ? ApresentacaoScreen()
-            : HomeView(),);
+    return Container(
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      color: Color_Scheme.primaryColor,
+    );
   }
 }

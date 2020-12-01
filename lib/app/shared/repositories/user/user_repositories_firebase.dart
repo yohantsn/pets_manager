@@ -1,10 +1,13 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pets_manager/app/models/user/user_model.dart';
+import 'package:pets_manager/app/shared/repositories/user/user_repositorie_interface.dart';
 
 
- class UserRepositories {
-  UserRepositories() {
-    this.fire = FirebaseFirestore.instance;
+ class UserFirebase implements IUser {
+   UserFirebase() {
+     this.fire = FirebaseFirestore.instance;
   }
 
   FirebaseFirestore fire;

@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pets_manager/app/models/user/user_model.dart';
-import 'package:pets_manager/app/modules/home/home_module/home_view.dart';
-import 'package:pets_manager/app/shared/core/firebase/auth/auth_core.dart';
+import 'package:pets_manager/app/shared/core/firebase/auth/auth_interface.dart';
 
 
 part 'login_controller.g.dart';
 
 class LoginController = _LoginControllerStore with _$LoginController;
 
-abstract class _LoginControllerStore extends AuthCore with Store {
+abstract class _LoginControllerStore with Store {
+  final IAuth authFirebase = Modular.get();
   @observable
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -30,9 +30,8 @@ abstract class _LoginControllerStore extends AuthCore with Store {
       String password = controllerPassword.text;
       String email = controllerEmail.text;
 
-
       UserModel userModel;
-      authSignAccountEmail(email: email, password: password)
+      authFirebase.authSignAccountEmail(email: email, password: password)
           .then((value) {
         if (value.errorMsg.isEmpty) {
           Modular.to.pushNamed("/home/", arguments: {"userModel" : userModel});

@@ -6,8 +6,10 @@ import 'package:mobx/mobx.dart';
 import 'package:pets_manager/app/models/user/user_model.dart';
 import 'package:pets_manager/app/modules/pet/cadastro_pet/cadastro_pet_view.dart';
 import 'package:pets_manager/app/shared/core/firebase/auth/auth_core.dart';
+import 'package:pets_manager/app/shared/core/firebase/auth/auth_interface.dart';
 import 'package:pets_manager/app/shared/location/location_interface_data.dart';
-import 'package:pets_manager/app/shared/repositories/user/user_repositories.dart';
+import 'package:pets_manager/app/shared/repositories/user/user_repositorie_interface.dart';
+import 'package:pets_manager/app/shared/repositories/user/user_repositories_firebase.dart';
 
 
 part 'create_account_controller.g.dart';
@@ -17,6 +19,8 @@ class CreateAccountController = _CreateAccountController
 
 abstract class _CreateAccountController with Store {
   final ILocationData geoData = Modular.get();
+  final IUser userFirebase = Modular.get();
+  final IAuth authFirebase = Modular.get();
 
   @observable
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -52,7 +56,7 @@ abstract class _CreateAccountController with Store {
   Future<void> createAccount({BuildContext context}) async {
     if (formKey.currentState.validate()) {
       this.isLoading = true;
-      UserModel userModel = await AuthCore().authCreateAccountEmail(
+      UserModel userModel = await authFirebase.authCreateAccountEmail(
           email: controllerEmail.text, password: controllerPassword.text);
       if (userModel.errorMsg == null || userModel.errorMsg.isEmpty) {
         LocationData locationData = await geoData.getLocation();
@@ -65,7 +69,7 @@ abstract class _CreateAccountController with Store {
         userModel.isEmailVerified = false;
         userModel.ownerModeDark = false;
         userModel.ownerPicProfile = "";
-        UserRepositories()
+        userFirebase
             .createProfile(userModel: userModel, uid: userModel.uid)
             .then((value) {
           this.isLoading = false;

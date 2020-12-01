@@ -1,16 +1,22 @@
 import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:pets_manager/app/models/user/user_model.dart';
-import 'package:pets_manager/app/shared/repositories/user/user_repositories.dart';
+import 'package:pets_manager/app/shared/core/firebase/auth/auth_interface.dart';
+import 'package:pets_manager/app/shared/repositories/user/user_repositorie_interface.dart';
 
 
-class AuthCore extends UserRepositories {
+class AuthFirebase implements IAuth{
   FirebaseAuth auth;
-  AuthCore() {
+  AuthFirebase() {
     this.auth = FirebaseAuth.instance;
   }
+  final IUser userFirebase = Modular.get();
 
+  @override
   Future<UserModel> authCreateAccountEmail(
       {@required String email, @required String password}) async {
     UserModel user;
@@ -50,6 +56,7 @@ class AuthCore extends UserRepositories {
     }
   }
 
+  @override
   Future<UserModel> authSignAccountEmail(
       {@required String email, @required String password}) async {
     UserModel user;
@@ -57,7 +64,7 @@ class AuthCore extends UserRepositories {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       user =
-          await getUserModel(uid: userCredential.user.uid);
+          await userFirebase.getUserModel(uid: userCredential.user.uid);
       user.errorMsg = "";
       return user;
     } on FirebaseAuthException catch (e) {
@@ -77,19 +84,21 @@ class AuthCore extends UserRepositories {
     }
   }
 
+  @override
   void sendEmailVerification() {
     auth.currentUser.sendEmailVerification().then((value) {
       return;
     });
   }
 
+  @override
   Future<UserModel> validateCode({@required String code}) async {
     UserModel user;
     try {
       await auth.checkActionCode(code);
       await auth.applyActionCode(code);
       auth.currentUser.reload();
-      getUserModel(uid: auth.currentUser.uid.toString()).then((value) {
+      userFirebase.getUserModel(uid: auth.currentUser.uid.toString()).then((value) {
         user = value;
         user.isEmailVerified = auth.currentUser.emailVerified;
         return user;
@@ -103,15 +112,23 @@ class AuthCore extends UserRepositories {
     }
   }
 
+  @override
   Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
   }
 
-  bool islogged() {
+  @override
+  bool isLogged() {
     return auth.currentUser.uid.isNotEmpty;
   }
 
+  @override
   String getUid() {
-    return auth.currentUser.uid;
+    if(auth.currentUser != null){
+      return auth.currentUser.uid;
+    }else{
+      return "";
+    }
+
   }
 }

@@ -1,20 +1,24 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:pets_manager/app/models/user/user_model.dart';
 import 'package:pets_manager/app/modules/pet/cadastro_pet/cadastro_pet_view.dart';
 import 'package:pets_manager/app/shared/core/firebase/auth/auth_core.dart';
-import 'package:pets_manager/app/shared/repositories/user/user_repositories.dart';
-
+import 'package:pets_manager/app/shared/core/firebase/auth/auth_interface.dart';
+import 'package:pets_manager/app/shared/repositories/user/user_repositorie_interface.dart';
 
 part 'validation_phone_controller.g.dart';
 
 class ValidationPhoneController = _ValidationPhoneController with _$ValidationPhoneController;
 
-abstract class _ValidationPhoneController extends UserRepositories with Store {
+abstract class _ValidationPhoneController with Store {
 
   _ValidationPhoneController({this.userModel});
+
+  final IUser userFirebase = Modular.get();
+  final IAuth authFirebase = Modular.get();
 
   @observable
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -46,8 +50,8 @@ abstract class _ValidationPhoneController extends UserRepositories with Store {
   @action
   Future<bool> verifyCode(String code) async {
     if(this.userModel.codeValidation == null || this.userModel.codeValidation.isEmpty){
-      this.uid = AuthCore().getUid();
-      this.userModel = await getUserModel(uid: uid);
+      this.uid = authFirebase.getUid();
+      this.userModel = await userFirebase.getUserModel(uid: uid);
     }
     return code == this.userModel.codeValidation;
   }
@@ -101,7 +105,7 @@ abstract class _ValidationPhoneController extends UserRepositories with Store {
     bool value = await verifyCode(code);
     if(value){
       this.userModel.isPhoneVerified = true;
-      await updateProfile(uid: this.userModel.uid, userModel: this.userModel);
+      await userFirebase.updateProfile(uid: this.userModel.uid, userModel: this.userModel);
       Navigator.push(context, MaterialPageRoute(builder: (context) => NewPetScreen(userModel: this.userModel,)));
     }else{
       n1 = "";

@@ -4,18 +4,19 @@ import 'package:mobx/mobx.dart';
 import 'package:pets_manager/app/models/pets/pets_model.dart';
 import 'package:pets_manager/app/models/user/user_model.dart';
 import 'package:pets_manager/app/shared/core/colors_scheme.dart';
-import 'package:pets_manager/app/shared/core/firebase/auth/auth_core.dart';
+import 'package:pets_manager/app/shared/core/firebase/auth/auth_interface.dart';
 import 'package:pets_manager/app/shared/repositories/pets/pet/pet_interface_repositorie.dart';
-import 'package:pets_manager/app/shared/repositories/user/user_repositories.dart';
-
+import 'package:pets_manager/app/shared/repositories/user/user_repositorie_interface.dart';
 
 part 'home_controller.g.dart';
 
 class HomeController = _HomeController
     with _$HomeController;
 
-abstract class _HomeController extends UserRepositories with Store{
+abstract class _HomeController with Store{
   final IPetRepositorie petRepositorie = Modular.get();
+  final IUser userFirebase = Modular.get();
+  final IAuth authFirebase = Modular.get();
   _HomeController({this.userModel}) {
     getUserData();
   }
@@ -52,8 +53,8 @@ abstract class _HomeController extends UserRepositories with Store{
   Future<void> getUserData() async {
     this.isLoading =  true;
     if(this.userModel == null) {
-      String uid = AuthCore().getUid();
-      this.userModel = await  getUserModel(uid: uid);
+      String uid = authFirebase.getUid();
+      this.userModel = await  userFirebase.getUserModel(uid: uid);
     }
     color_Scheme = Color_Scheme(userModel: this.userModel);
     this.isLoading = false;
